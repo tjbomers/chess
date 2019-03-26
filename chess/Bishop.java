@@ -15,7 +15,7 @@ public class Bishop extends ChessPiece {
 	/**
 	 * Shows the piece type to the player, in this case "Bishop"
 	 *
-	 * @return Will show Bishop
+	 * @return Will show Bishops
 	 */
 	public String type() {
 
