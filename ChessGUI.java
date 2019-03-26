@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class ChessGUI {
 
     /**
-     * Comments
+     * more comments
      */
     public static void main(String[] args) {
         JFrame frame = new JFrame("Chess Game");
