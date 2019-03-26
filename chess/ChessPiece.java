@@ -66,17 +66,20 @@ public abstract class ChessPiece implements IChessPiece {
 			return false;
 		}
 
-		// Checks to see that the space moved to is empty or not owned by a piece
-		// of the same color
-		if (board[move.toRow][move.toColumn] != null &&
-				(board[move.toRow][move.toColumn] == this.owner) ) {
-			return false;
-		}
-
 		// Checks to see if an actual move has been made.  If so, mark as true.
 		if (((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn)) == false) {
 			return true;
 		}
-		return false;
+
+		//Verify that this piece is located at the location from which it is moving.
+		if (board[move.fromRow][move.fromColumn].player() != this.player()) {
+			return false;
+		}
+		if (board[move.toRow][move.toColumn].player() != this.player()) {
+			return false;
+		}
+
+		return true;
+
 	}
 }

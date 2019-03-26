@@ -41,19 +41,19 @@ public class Bishop extends ChessPiece {
 		//This will check to see if the Bishop is moving at a 45 degree angle.  This
 		//is accomplished by checking to see if it moves the same number of horizontal
 		//spaces as it does vertical spaces
-		if (board[move.fromRow][move.fromColumn] != board[move.toRow][move.toColumn]) {
-			if ((move.fromRow - move.toRow) == ((move.fromColumn - move.toColumn) ||
-					(move.toColumn - move.fromColumn)) {
-				return true;
-			}
-		}
+		//if (board[move.fromRow][move.fromColumn] != board[move.toRow][move.toColumn]) {
+			//if ((move.fromRow - move.toRow) == ((move.fromColumn - move.toColumn) ||
+			//		(move.toColumn - move.fromColumn)) {
+			//	return true;
+			//}
+		//}
 
-		if (board[move.fromRow][move.fromColumn] != board[move.toRow][move.toColumn]) {
-			if ((move.toRow - move.fromRow) == ((move.fromColumn - move.toColumn) ||
-					(move.toColumn - move.fromColumn))) {
-				return true;
-			}
-		}
+	//	if (board[move.fromRow][move.fromColumn] != board[move.toRow][move.toColumn]) {
+			//if ((move.toRow - move.fromRow) == ((move.fromColumn - move.toColumn) ||
+			//		(move.toColumn - move.fromColumn))) {
+			//	return true;
+			//}
+		//}
 
 		return false;
 	}

@@ -44,6 +44,14 @@ public class Pawn extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
+		if ((board[move.fromRow + 1][move.fromColumn + 1].player() != this.player())
+			|| board[move.fromRow + 1][move.fromColumn - 1].player() != this.player()) {
+			isAttackMode = true;
+		}
+		else {
+			isAttackMode = false;
+		}
+
 		//If it is the pawn's first move, it can move up to two spaces forward instead of
 		//the normal one space.
 		if (isFirstMove == true) {
