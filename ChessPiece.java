@@ -47,6 +47,8 @@ public abstract class ChessPiece implements IChessPiece {
 
 	}
 
+
+
 	/**
 	 * This method will determine whether a move is valid or not.  This framework
 	 * will be common for all different types of pieces, and the methods for individual
