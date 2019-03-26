@@ -8,7 +8,7 @@ public class ChessPanel extends JPanel {
 
     private JButton[][] board;
     private ChessModel model;
-//These pieces do things
+//These pieces do things, lots of things
     private ImageIcon wRook;
     private ImageIcon wBishop;
     private ImageIcon wQueen;
