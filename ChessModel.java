@@ -36,9 +36,7 @@ public class ChessModel implements IChessModel {
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
-		backups.add(new IChessPiece[7][7]);
-		backups.get(0) = board;
-
+		backups.add(board.clone());
 	}
 
 	public boolean isComplete() {
@@ -61,14 +59,14 @@ public class ChessModel implements IChessModel {
 	public void move(Move move) {
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
-		backups.add(board);
+		backups.add(board.clone());
 		this.setNextPlayer();
 	}
 
 	public void undo(int d) {
 		if(backups.size() > d ) {
 			System.out.println("Take it back now y'all" + backups.size());
-			board = backups.get(d);
+			board = backups.get(backups.size() - 1 - d);
 		}
 	}
 
