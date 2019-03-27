@@ -58,5 +58,6 @@ public class Rook extends ChessPiece {
 				}
 			}
 		}
+		return false;
 	}
 }

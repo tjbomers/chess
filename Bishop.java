@@ -61,7 +61,25 @@ public class Bishop extends ChessPiece {
 			}
 		}
 
+		//This will check and see if the Bishop is trying to move straight up,
+		//down, left, or right.  If so, the move is invalid.
+		if (move.fromRow == move.toRow || move.fromColumn == move.toColumn) {
+			return false;
+		}
 
-		return true;
+		//This will check to see if the Bishop is moving at a 45 degree angle.  This
+		//is accomplished by checking to see if it moves the same number of horizontal
+		//spaces as it does vertical spaces
+		if (board[move.fromRow][move.fromColumn] != board[move.toRow][move.toColumn]) {
+			if (Math.abs(move.fromRow - move.toRow) == (Math.abs(move.fromColumn - move.toColumn))) {
+				if(board[move.toRow][move.toColumn] != null)
+					if(board[move.toRow][move.toColumn].player() == (board[move.fromRow][move.fromColumn].player())) {
+						return false;
+					}
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
