@@ -36,6 +36,7 @@ public class Queen extends ChessPiece {
 		//Incorporates the rook moveset
 		Rook move2 = new Rook(board[move.fromRow][move.fromColumn].player());
 		//If either moveset is followed, this is a valid move
+
 		return (move1.isValidMove(move, board) || move2.isValidMove(move, board));
 	}
 }
