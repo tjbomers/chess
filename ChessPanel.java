@@ -24,7 +24,7 @@ public class ChessPanel extends JPanel {
     private int toRow;
     private int fromCol;
     private int toCol;
-    // declare other intance variables as needed
+    // declare other instance variables as needed
 
     private listener listener;
 
@@ -45,7 +45,10 @@ public class ChessPanel extends JPanel {
                     board[r][c].addActionListener(listener);
                 } else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     placeWhitePieces(r, c);
+                } else if (model.pieceAt(r, c).player() == Player.BLACK) {
+                    placeBlackPieces(r, c);
                 }
+
                 setBackGroundColor(r, c);
                 boardpanel.add(board[r][c]);
             }
