@@ -47,7 +47,7 @@ public class Bishop extends ChessPiece {
 					return false;
 				}
 			} else if(quadrant == 2) {
-				if(board[move.fromRow - i][move.fromColumn - i] != null) {
+				if(board[move.fromRow + i][move.fromColumn + i] != null) {
 					return false;
 				}
 			} else if(quadrant == 3) {
