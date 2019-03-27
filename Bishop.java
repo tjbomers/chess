@@ -30,14 +30,14 @@ public class Bishop extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		int magnitude = Math.abs(move.fromRow - move.toRow);
-		int quadrant;
+		int quadrant = -1;
 		if (move.toRow - move.fromRow < 0  && move.toColumn - move.fromColumn > 0) {
 			quadrant = 1;
 		} else if (move.toRow - move.fromRow > 0  && move.toColumn - move.fromColumn > 0) {
 			quadrant = 2;
 		} else if (move.toRow - move.fromRow > 0  && move.toColumn - move.fromColumn < 0) {
 			quadrant = 3;
-		} else {
+		} else if (move.toRow - move.fromRow < 0  && move.toColumn - move.fromColumn < 0){
 			quadrant = 4;
 		}
 
@@ -54,7 +54,7 @@ public class Bishop extends ChessPiece {
 				if(board[move.fromRow + i][move.fromColumn - i] != null) {
 					return false;
 				}
-			} else {
+			} else if(quadrant == 4) {
 				if(board[move.fromRow - i][move.fromColumn - i] != null) {
 					return false;
 				}
