@@ -45,7 +45,7 @@ public class ChessModel implements IChessModel {
 
 		if (board[move.fromRow][move.fromColumn] != null)
 			if (board[move.fromRow][move.fromColumn].isValidMove(move, board) == true)
-                return true;
+                valid = true;
 
 		return valid;
 	}
