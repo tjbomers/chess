@@ -1,6 +1,4 @@
-package chess;
-
-public class ChessModel implements IChessModel {	 
+public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
 	private Player player;
 
@@ -20,7 +18,6 @@ public class ChessModel implements IChessModel {
         board[7][7] = new Rook(Player.WHITE);
 
         player = Player.BLACK;
-
 		board[7][0] = new Rook(Player.BLACK);
 		board[7][1] = new Knight(Player.BLACK);
 		board[7][2] = new Bishop(Player.BLACK);
@@ -72,7 +69,7 @@ public class ChessModel implements IChessModel {
 		return 8;
 	}
 
-	public IChessPiece pieceAt(int row, int column) {		
+	public IChessPiece pieceAt(int row, int column) {
 
 		return board[row][column];
 	}

@@ -1,5 +1,3 @@
-package chess;
-
 /******************************************
  * This class will detail how the Bishop moves.  Much like the Rook
  * the Bishop can move multiple spaces at once in a diagonal.  Also,
