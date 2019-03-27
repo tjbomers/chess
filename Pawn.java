@@ -51,7 +51,7 @@ public class Pawn extends ChessPiece {
 	private boolean isValidMoveWhite(Move move, IChessPiece[][] board) {
 		if(move.fromRow == 6) {
 			if((move.fromColumn - move.toColumn) == 0) {
-				if(move.toRow == 4 || move.toRow == 5) {
+				if(move.toRow == 4) {
 					if(board[move.toRow][move.toColumn] == null){
 						return true;
 					}
@@ -78,7 +78,7 @@ public class Pawn extends ChessPiece {
 	private boolean isValidMoveBlack(Move move, IChessPiece[][] board) {
 		if(move.fromRow == 1) {
 			if((move.fromColumn - move.toColumn) == 0) {
-				if(move.toRow == 3 || move.toRow == 2) {
+				if(move.toRow == 3) {
 					if(board[move.toRow][move.toColumn] == null){
 						return true;
 					}
