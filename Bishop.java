@@ -41,6 +41,10 @@ public class Bishop extends ChessPiece {
 		//spaces as it does vertical spaces
 		if (board[move.fromRow][move.fromColumn] != board[move.toRow][move.toColumn]) {
 			if (Math.abs(move.fromRow - move.toRow) == (Math.abs(move.fromColumn - move.toColumn))) {
+				if(board[move.toRow][move.toColumn] != null)
+					if(board[move.toRow][move.toColumn].player() == (board[move.fromRow][move.fromColumn].player())) {
+						return false;
+					}
 				return true;
 			}
 		}
