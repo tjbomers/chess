@@ -31,6 +31,38 @@ public class Rook extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
+        int magnitude = Math.abs(move.fromRow - move.toRow + move.fromColumn - move.toColumn);
+        int direction = -1;
+        if (move.toRow - move.fromRow < 0  && move.toColumn - move.fromColumn == 0) {
+            direction = 1;
+        } else if (move.toRow - move.fromRow == 0  && move.toColumn - move.fromColumn > 0) {
+            direction = 2;
+        } else if (move.toRow - move.fromRow > 0  && move.toColumn - move.fromColumn == 0) {
+            direction = 3;
+        } else if(move.toRow - move.fromRow == 0  && move.toColumn - move.fromColumn < 0) {
+            direction = 4;
+        }
+
+        for (int i = 1; i < magnitude; i++) {
+            if(direction == 1) {
+                if(board[move.fromRow - i][move.fromColumn] != null) {
+                    return false;
+                }
+            } else if(direction == 2) {
+                if(board[move.fromRow][move.fromColumn + i] != null) {
+                    return false;
+                }
+            } else if(direction == 3) {
+                if(board[move.fromRow + i][move.fromColumn] != null) {
+                    return false;
+                }
+            } else  if(direction == 4){
+                if(board[move.fromRow][move.fromColumn - i] != null) {
+                    return false;
+                }
+            }
+        }
+
 		//Checks to see if the Rook is trying to move on a diagonal, which is
 		//illegal for that piece.
 		if (move.fromRow != move.toRow && move.fromColumn != move.toColumn) {
