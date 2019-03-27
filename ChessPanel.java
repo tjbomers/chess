@@ -115,19 +115,19 @@ public class ChessPanel extends JPanel {
 
     private void createIcons() {
         // Sets the Image for white player pieces
-        wRook = new ImageIcon("C:/Users/tjbomers/Desktop/School/2019/Winter/CIS 163/Projects/Project 3/chess/wRook.png");
-        wBishop = new ImageIcon("/src/W19Project3/wBishop.png");
-        wQueen = new ImageIcon("src/W19Project3/wQueen.png");
-        wKing = new ImageIcon("./src/W19Project3/wKing.png");
-        wPawn = new ImageIcon("./src/W19Project3/wPawn.png");
-        wKnight = new ImageIcon("./src/W19Project3/wKnight.png");
+        wRook = new ImageIcon("wRook.png");
+        wBishop = new ImageIcon("wBishop.png");
+        wQueen = new ImageIcon("wQueen.png");
+        wKing = new ImageIcon("wKing.png");
+        wPawn = new ImageIcon("wPawn.png");
+        wKnight = new ImageIcon("wKnight.png");
         // Sets the Image for black player pieces
-        bRook = new ImageIcon("./src/W19Project3/bRook.png");
-        bBishop = new ImageIcon("./src/W19Project3/bBishop.png");
-        bQueen = new ImageIcon("./src/W19Project3/bQueen.png");
-        bKing = new ImageIcon("./src/W19Project3/bKing.png");
-        bPawn = new ImageIcon("./src/W19Project3/bPawn.png");
-        bKnight = new ImageIcon("./src/W19Project3/bKnight.png");
+        bRook = new ImageIcon("bRook.png");
+        bBishop = new ImageIcon("bBishop.png");
+        bQueen = new ImageIcon("bQueen.png");
+        bKing = new ImageIcon("bKing.png");
+        bPawn = new ImageIcon("bPawn.png");
+        bKnight = new ImageIcon("bKnight.png");
     }
 
     // method that updates the board
@@ -194,7 +194,7 @@ public class ChessPanel extends JPanel {
                             toCol = c;
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
-                            if ((model.isValidMove(m)) == true) {
+                            if ((model.isValidMove(m))) {
                                 model.move(m);
                                 displayBoard();
                             }

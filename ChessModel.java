@@ -78,7 +78,7 @@ public class ChessModel implements IChessModel {
 
 	public IChessPiece pieceAt(int row, int column) {
 
-		return board[row][column];
+				return board[row][column];
 	}
 
 	public void setNextPlayer() {
