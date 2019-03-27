@@ -44,8 +44,10 @@ public class Pawn extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
-		if ((board[move.fromRow + 1][move.fromColumn + 1].player() != this.player())
-			|| board[move.fromRow + 1][move.fromColumn - 1].player() != this.player()) {
+		//This will check to see if an opponent's piece is diagonally up and to the left
+		//or right of the pawn.  If so, the pawn can move and take either of those pieces.
+		if ((board[move.toRow + 1][move.toColumn + 1].player() != this.player())
+			|| board[move.toRow + 1][move.toColumn - 1].player() != this.player()) {
 			isAttackMode = true;
 		}
 		else {

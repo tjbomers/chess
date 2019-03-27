@@ -43,9 +43,9 @@ public class Rook extends ChessPiece {
 		if (move.fromRow < move.toRow && move.fromColumn == move.toColumn) {
 			for (int i = move.fromRow; i <= move.toRow; i++) {
 				if (board[i][move.fromColumn] != null) {
-					//if piece is opposite color, take the piece
-					//if piece is the same color, declare the move as false
-					break;
+					if (board[move.toRow][move.toColumn].player() != this.player()) {
+						return true;
+					}
 				}
 			}
 		}
@@ -54,9 +54,10 @@ public class Rook extends ChessPiece {
 		if (move.fromRow > move.toRow && move.fromColumn == move.toColumn) {
 			for (int i = move.fromRow; i >= move.toRow; i--) {
 				if (board[i][move.fromColumn] != null) {
-					//if piece is opposite color, take the piece
-					//if piece is the same color, declare the move as false
-					break;
+					if (board[move.toRow][move.toColumn].player() != this.player()) {
+						return true;
+					}
+
 				}
 			}
 		}
@@ -65,9 +66,9 @@ public class Rook extends ChessPiece {
 		if (move.fromColumn < move.toColumn && move.fromRow == move.toRow) {
 			for (int i = move.fromColumn; i <= move.toColumn; i++) {
 				if (board[move.fromRow][i] != null) {
-					//if piece is opposite color, take the piece
-					//if piece is the same color, declare the move as false
-					break;
+					if (board[move.toRow][move.toColumn].player() != this.player()) {
+						return true;
+					}
 				}
 			}
 		}
@@ -76,8 +77,9 @@ public class Rook extends ChessPiece {
 		if (move.fromColumn > move.toColumn && move.fromRow == move.toRow) {
 			for (int i = move.fromColumn; i >= move.toColumn; i--) {
 				if (board[move.fromRow][i] != null) {
-					//if piece is opposite color, take the piece
-					//if piece is the same color, declare the move as false
+					if (board[move.toRow][move.toColumn].player() != this.player()) {
+						return true;
+					}
 				}
 			}
 		}

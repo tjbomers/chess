@@ -8,7 +8,6 @@ public class ChessPanel extends JPanel {
 
     private JButton[][] board;
     private ChessModel model;
-//These pieces do things, lots of things
     private ImageIcon wRook;
     private ImageIcon wBishop;
     private ImageIcon wQueen;
@@ -46,9 +45,9 @@ public class ChessPanel extends JPanel {
                 if (model.pieceAt(r, c) == null) {
                     board[r][c] = new JButton("", null);
                     board[r][c].addActionListener(listener);
-                } else if (model.pieceAt(r, c).player() == Player.WHITE)
+                } else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     placeWhitePieces(r, c);
-
+                }
                 setBackGroundColor(r, c);
                 boardpanel.add(board[r][c]);
             }

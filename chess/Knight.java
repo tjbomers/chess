@@ -35,42 +35,66 @@ public class Knight extends ChessPiece {
 	public boolean isValidMove(Move move, IChessPiece[][] board){
 
 		//Checks to see if the knight moved up two rows and right one column
-		if (board[move.fromRow + 2][move.fromColumn + 1] == board[move.toRow][move.toRow]) {
+		if (board[move.fromRow + 2][move.fromColumn + 1] == board[move.toRow][move.toColumn]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
 		//Checks to see if the knight moved up one row and right two columns
-		if (board[move.fromRow + 1][move.fromColumn + 2] == board[move.toRow][move.toRow]) {
+		if (board[move.fromRow + 1][move.fromColumn + 2] == board[move.toRow][move.toColumn]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
 		//Checks to see if the knight moved up two rows and left one column
-		if (board[move.fromRow + 2][move.fromColumn - 1] == board[move.toRow][move.toRow]) {
+		if (board[move.fromRow + 2][move.fromColumn - 1] == board[move.toRow][move.toColumn]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
 		//Checks to see if the knight moved up one row and left two columns
-		if (board[move.fromRow + 1][move.fromColumn - 2] == board[move.toRow][move.toRow]) {
+		if (board[move.fromRow + 1][move.fromColumn - 2] == board[move.toRow][move.toColumn]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
 		//Checks to see if the knight moved down two rows and right one column
-		if (board[move.fromRow - 2][move.fromColumn + 1] == board[move.toRow][move.toRow]) {
+		if (board[move.fromRow - 2][move.fromColumn + 1] == board[move.toRow][move.toColumn]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
 		//Checks to see if the knight moved down one row and right two columns
-		if (board[move.fromRow - 1][move.fromColumn + 2] == board[move.toRow][move.toRow]) {
+		if (board[move.fromRow - 1][move.fromColumn + 2] == board[move.toRow][move.toColumn]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
 		//Checks to see if the knight moved down two rows and left one column
-		if (board[move.fromRow - 2][move.fromColumn - 1] == board[move.toRow][move.toRow]) {
+		if (board[move.fromRow - 2][move.fromColumn - 1] == board[move.toRow][move.toColumn]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
 		//Checks to see if the knight moved down one row and left two columns
 		if (board[move.fromRow - 1][move.fromColumn - 2] == board[move.toRow][move.toRow]) {
+			if (board[move.toRow][move.toColumn].player() != this.player()) {
+				return true;
+			}
 			return true;
 		}
 
