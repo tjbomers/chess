@@ -29,6 +29,37 @@ public class Bishop extends ChessPiece {
 	 * @return Will return true if the move is valid
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
+		int magnitude = Math.abs(move.fromRow - move.toRow);
+		int quadrant;
+		if (move.toRow - move.fromRow < 0  && move.toColumn - move.fromColumn > 0) {
+			quadrant = 1;
+		} else if (move.toRow - move.fromRow > 0  && move.toColumn - move.fromColumn > 0) {
+			quadrant = 2;
+		} else if (move.toRow - move.fromRow > 0  && move.toColumn - move.fromColumn < 0) {
+			quadrant = 3;
+		} else {
+			quadrant = 4;
+		}
+
+		for (int i = 1; i < magnitude; i++) {
+			if(quadrant == 1) {
+				if(board[move.fromRow - i][move.fromColumn + i] != null) {
+					return false;
+				}
+			} else if(quadrant == 2) {
+				if(board[move.fromRow - i][move.fromColumn - i] != null) {
+					return false;
+				}
+			} else if(quadrant == 3) {
+				if(board[move.fromRow + i][move.fromColumn - i] != null) {
+					return false;
+				}
+			} else {
+				if(board[move.fromRow - i][move.fromColumn - i] != null) {
+					return false;
+				}
+			}
+		}
 
 		//This will check and see if the Bishop is trying to move straight up,
 		//down, left, or right.  If so, the move is invalid.
