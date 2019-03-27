@@ -61,7 +61,6 @@ public class ChessPanel extends JPanel {
     }
 
     private void setBackGroundColor(int r, int c) {
-        System.out.println(r + ": " + c);
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
             board[r][c].setBackground(Color.LIGHT_GRAY);
         } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
