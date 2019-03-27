@@ -42,21 +42,63 @@ public class Pawn extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
-		if ((move.toColumn - move.fromColumn) == 0) {
-			if ((move.toRow - move.fromRow) == -1) {
-				if (board[move.toRow][move.toColumn] == null) {
+		if (board[move.fromRow][move.fromColumn].player() == Player.WHITE)
+			return isValidMoveWhite(move, board);
+		else
+			return isValidMoveBlack(move, board);
+	}
+
+	private boolean isValidMoveWhite(Move move, IChessPiece[][] board) {
+		if(move.fromRow == 6) {
+			if((move.fromColumn - move.toColumn) == 0) {
+				if(move.toRow == 4 || move.toRow == 5) {
+					if(board[move.toRow][move.toColumn] == null){
+						return true;
+					}
+				}
+			}
+		}
+		if(move.fromRow - move.toRow == 1) {
+			if (move.fromColumn - move.toColumn == 0) {
+				if(board[move.toRow][move.toColumn] == null) {
 					return true;
+				}
+			}
+			if(Math.abs(move.fromColumn - move.toColumn) == 1) {
+				if (board[move.toRow][move.toColumn] != null) {
+					if (board[move.toRow][move.toColumn].player() == Player.BLACK) {
+						return true;
+					}
 				}
 			}
 		}
 		return false;
 	}
 
-	private boolean isValidMoveWhite(Move move, IChessPiece[][] board) {
-		return true;
-	}
-
 	private boolean isValidMoveBlack(Move move, IChessPiece[][] board) {
-		return true;
+		if(move.fromRow == 1) {
+			if((move.fromColumn - move.toColumn) == 0) {
+				if(move.toRow == 3 || move.toRow == 2) {
+					if(board[move.toRow][move.toColumn] == null){
+						return true;
+					}
+				}
+			}
+		}
+		if(move.fromRow - move.toRow == -1) {
+			if (move.fromColumn - move.toColumn == 0) {
+				if(board[move.toRow][move.toColumn] == null) {
+					return true;
+				}
+			}
+			if(Math.abs(move.fromColumn - move.toColumn) == 1) {
+				if (board[move.toRow][move.toColumn] != null) {
+					if (board[move.toRow][move.toColumn].player() == Player.WHITE) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
