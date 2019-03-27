@@ -37,10 +37,10 @@ public class Rook extends ChessPiece {
 			return false;
 		}
 
-		//Checks for pieces in the path of the rook in the event it moves up
-		if (move.fromRow < move.toRow && move.fromColumn == move.toColumn) {
-			for (int i = move.fromRow; i <= move.toRow; i++) {
-				if (board[i][move.fromColumn] != null) {
+		//Checks for pieces in the path of the rook in the event it moves up or down
+		if (move.fromRow - move.toRow == 0) {
+			for (int i = 0; i <= Math.abs(move.toColumn - move.fromColumn); i++) {
+				if (board[move.toRow][move.toColumn] != null) {
 					if (board[move.toRow][move.toColumn].player() != this.player()) {
 						return true;
 					}
@@ -48,43 +48,15 @@ public class Rook extends ChessPiece {
 			}
 		}
 
-		//Checks for pieces in the path of the rook in the event it moves down
-		if (move.fromRow > move.toRow && move.fromColumn == move.toColumn) {
-			for (int i = move.fromRow; i >= move.toRow; i--) {
-				if (board[i][move.fromColumn] != null) {
-					if (board[move.toRow][move.toColumn].player() != this.player()) {
-						return true;
-					}
-
-				}
-			}
-		}
-
-		//Checks for pieces in the path of the rook in the event it moves right
-		if (move.fromColumn < move.toColumn && move.fromRow == move.toRow) {
-			for (int i = move.fromColumn; i <= move.toColumn; i++) {
-				if (board[move.fromRow][i] != null) {
+		//Checks for pieces in the path of the rook in the event it moves left or right
+		if (move.fromColumn - move.toColumn == 0) {
+			for (int i = 0; i <= Math.abs(move.toRow - move.fromRow); i++) {
+				if (board[move.toRow][move.toColumn] != null) {
 					if (board[move.toRow][move.toColumn].player() != this.player()) {
 						return true;
 					}
 				}
 			}
 		}
-
-		//Checks for pieces in the path of the rook in the event it moves left
-		if (move.fromColumn > move.toColumn && move.fromRow == move.toRow) {
-			for (int i = move.fromColumn; i >= move.toColumn; i--) {
-				if (board[move.fromRow][i] != null) {
-					if (board[move.toRow][move.toColumn].player() != this.player()) {
-						return true;
-					}
-				}
-			}
-		}
-
-
-		return true;
-		
 	}
-	
 }
