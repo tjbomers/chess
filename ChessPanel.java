@@ -5,6 +5,7 @@ import javax.swing.*;
 public class ChessPanel extends JPanel {
 
     private JButton[][] board;
+    private JButton undoButton;
     private ChessModel model;
     private ImageIcon wRook;
     private ImageIcon wBishop;
@@ -38,6 +39,10 @@ public class ChessPanel extends JPanel {
         JPanel buttonpanel = new JPanel();
         boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
 
+        undoButton = new JButton("Undo");
+        undoButton.addActionListener(listener);
+
+
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
                 if (model.pieceAt(r, c) == null) {
@@ -56,6 +61,7 @@ public class ChessPanel extends JPanel {
         add(boardpanel, BorderLayout.WEST);
         boardpanel.setPreferredSize(new Dimension(600, 600));
         add(buttonpanel);
+        add(undoButton);
         displayBoard();
         firstTurnFlag = true;
     }
@@ -198,6 +204,10 @@ public class ChessPanel extends JPanel {
                                 displayBoard();
                             }
                         }
+            if (undoButton == event.getSource()) {
+                model.undo(1);
+                displayBoard();
+            }
         }
     }
 }
