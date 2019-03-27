@@ -1,5 +1,3 @@
-package chess;
-
 public interface IChessPiece {
 	/**
 	 * Return the player that owns this piece.

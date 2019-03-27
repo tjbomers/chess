@@ -1,5 +1,3 @@
-package chess;
-
 /****************************************
  * This class will detail the legal moveset of the King.  Unlike the
  * Queen, the King can only move in one square each direction.  Also

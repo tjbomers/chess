@@ -1,5 +1,3 @@
-package chess;
-
 /*********************************************
  * This is the class which will govern the Pawn piece.  This will take the
  * existing rules of the base ChessPiece method and expand upon them.

@@ -1,5 +1,3 @@
-package chess;
-
 /*********************************************
  * The Rook is a piece that can move multiple spaces, as long as it is moving
  * sideways, forwards, or backwards.  It cannot move through other pieces, but

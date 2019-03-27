@@ -1,5 +1,3 @@
-package chess;
-
 /***************************************
  * This class will implement the moveset for the knight.  Unlike other
  * pieces with multi-square move potential, the knight will be able to jump

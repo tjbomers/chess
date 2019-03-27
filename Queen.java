@@ -1,5 +1,3 @@
-package chess;
-
 /***********************************************
  * This class will establish the legal moves for the Queen piece.  As the Queen
  * is essentially the Bishop and Rook pieces rolled into one, if we take the
