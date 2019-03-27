@@ -33,11 +33,11 @@ public class Knight extends ChessPiece {
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if ((Math.abs(move.fromRow - move.toRow) == 2 && Math.abs(move.fromColumn - move.toColumn) == 1)
 				|| (Math.abs(move.fromRow - move.toRow) == 1 && Math.abs(move.fromColumn - move.toColumn) == 2)){
-			if (board[move.toRow][move.toColumn].player() != null) {
+			if (board[move.toRow][move.toColumn] != null) {
 				if ((board[move.toRow][move.toColumn].player() != board[move.fromRow][move.fromColumn].player())) {
 					return true;
-				}
-			}
+				} else return false;
+			} else return true;
 		}
 		return false;
 	}
