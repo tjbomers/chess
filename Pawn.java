@@ -42,53 +42,21 @@ public class Pawn extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
-		//This will check to see if an opponent's piece is diagonally up and to the left
-		//or right of the pawn.  If so, the pawn can move and take either of those pieces.
-		if ((board[move.toRow + 1][move.toColumn + 1].player() != this.player())
-			|| board[move.toRow + 1][move.toColumn - 1].player() != this.player()) {
-			isAttackMode = true;
-		}
-		else {
-			isAttackMode = false;
-		}
-
-		//If it is the pawn's first move, it can move up to two spaces forward instead of
-		//the normal one space.
-		if (isFirstMove == true) {
-
-			if (((move.fromRow + 1 == move.toRow) && (move.fromColumn == move.toColumn))
-				|| ((move.fromRow + 2 == move.toRow) && (move.fromColumn == move.toColumn))) {
-
-				//Sets the first move flag to false so it can no longer move two spaces forward
-				isFirstMove = false;
-				return true;
+		if ((move.toColumn - move.fromColumn) == 0) {
+			if ((move.toRow - move.fromRow) == -1) {
+				if (board[move.toRow][move.toColumn] == null) {
+					return true;
+				}
 			}
 		}
-
-		//Pawns attack diagonally, not straight forward.  This boolean reflects that change
-		//in moving pattern
-		if (isAttackMode == true) {
-
-			if ((move.fromRow + 1 == move.toRow) && ((move.fromColumn + 1 == move.toColumn) ||
-					(move.fromColumn - 1 == move.toColumn))) {
-
-				//Sets the first move flag to false in case the pawn is attacking from its
-				//initial position
-				isFirstMove = false;
-				return true;
-			}
-		}
-
-		//Pawns can normally move only one square forward.  This case covers all other
-		//instances of its ability to move.
-		if (isAttackMode == false && isFirstMove == false) {
-
-			if ((move.fromRow + 1 == move.toRow) && (move.fromColumn == move.toColumn)) {
-
-				return true;
-			}
-		}
-
 		return false;
+	}
+
+	private boolean isValidMoveWhite(Move move, IChessPiece[][] board) {
+		return true;
+	}
+
+	private boolean isValidMoveBlack(Move move, IChessPiece[][] board) {
+		return true;
 	}
 }
