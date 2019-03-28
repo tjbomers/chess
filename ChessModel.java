@@ -56,7 +56,7 @@ public class ChessModel implements IChessModel {
 									for (int a = 0; a < 8; a++) {
 										for (int b = 0; b < 8; b++) {
 											if (board[a][b].player() == Player.WHITE) {
-												if (isValidMove)
+												if (isValidMove(testMove)) && board[a][b].type().equals("King")
 											}
 										}
 									}
