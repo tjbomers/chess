@@ -111,10 +111,10 @@ public class ChessModel implements IChessModel {
 
 	public boolean inCheck(Player p) {
 		boolean fixPlayer = false;
-		if (player ) {
-			player.next();
-			fixPlayer = true;
-		}
+		//if (player ) {
+		//	player.next();
+		//	fixPlayer = true;
+		//}
 		System.out.println(p);
 		System.out.println(player);
 	    Move testMove;
