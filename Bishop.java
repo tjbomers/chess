@@ -76,18 +76,22 @@ public class Bishop extends ChessPiece {
 		//conditions depending on which quadrant the move falls under.  If at any point in
 		//the move the Bishop runs into a piece (!= null), the proposed move is invalid.
 		for (int i = 1; i < magnitude; i++) {
+			//Down and to the right
 			if(quadrant == 1) {
 				if(board[move.fromRow - i][move.fromColumn + i] != null) {
 					return false;
 				}
+			//Up and to the right
 			} else if(quadrant == 2) {
 				if(board[move.fromRow + i][move.fromColumn + i] != null) {
 					return false;
 				}
+			//Up and to the left
 			} else if(quadrant == 3) {
 				if(board[move.fromRow + i][move.fromColumn - i] != null) {
 					return false;
 				}
+			//Down and to the left
 			} else if(quadrant == 4) {
 				if(board[move.fromRow - i][move.fromColumn - i] != null) {
 					return false;

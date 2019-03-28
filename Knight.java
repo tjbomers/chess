@@ -31,8 +31,12 @@ public class Knight extends ChessPiece {
 	 * @return Returns a valid move if the move is valid
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
+		//This will check to see if the knight jumps two rows and one column or one row
+		//and two columns in any direction.
 		if ((Math.abs(move.fromRow - move.toRow) == 2 && Math.abs(move.fromColumn - move.toColumn) == 1)
 				|| (Math.abs(move.fromRow - move.toRow) == 1 && Math.abs(move.fromColumn - move.toColumn) == 2)){
+			//This will check to see if there is a piece in the way of the knight's landing spot.
+			//If it's an enemy, take the piece.  If it's the same color piece, the move is invalid.
 			if (board[move.toRow][move.toColumn] != null) {
 				if ((board[move.toRow][move.toColumn].player() != board[move.fromRow][move.fromColumn].player())) {
 					return true;

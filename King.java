@@ -33,6 +33,7 @@ public class King extends ChessPiece {
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		//This loop will check all of the squares surrounding the king for legal moves
 		if (Math.abs(move.fromRow - move.toRow) <= 1 && Math.abs(move.fromColumn - move.toColumn) <= 1){
+			//Checks to make sure there is not a piece in the way of the king's movement
 			if (board[move.toRow][move.toColumn] != null) {
 				if ((board[move.toRow][move.toColumn].player() != board[move.fromRow][move.fromColumn].player())) {
 					return true;

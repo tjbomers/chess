@@ -2,11 +2,20 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/***************************************
+ * This class will establish the panel for the chess game.  This will
+ * establish the icons and place them in the proper locations on the board.
+ * The listener below will allow for interaction with the visible board
+ ***************************************/
 public class ChessPanel extends JPanel {
 
+    //Sets up the board as a series of JButtons
     private JButton[][] board;
+    //Sets up the undo button to cancel previous moves
     private JButton undoButton;
+    //Establishes a model object
     private ChessModel model;
+    //Creates image icons of all the available pieces in the game
     private ImageIcon wRook;
     private ImageIcon wBishop;
     private ImageIcon wQueen;
@@ -20,44 +29,61 @@ public class ChessPanel extends JPanel {
     private ImageIcon bPawn;
     private ImageIcon bKnight;
 
+    //Checks if it is the first turn
     private boolean firstTurnFlag;
+    //Establishes the row and column variables that will be used in many calculations
+    //when determining proper rulesets of pieces.
     private int fromRow;
     private int toRow;
     private int fromCol;
     private int toCol;
-    // declare other instance variables as needed
 
+    //Establishes a listener object
     private listener listener;
 
+    /**
+     * This method will serve as the constructor for the ChessPanel.  This will establish
+     * the undo button as well as the main board on which the pieces will be placed.
+     */
     public ChessPanel() {
         model = new ChessModel();
         board = new JButton[model.numRows()][model.numColumns()];
         listener = new listener();
         createIcons();
 
+        //Creating separate panels for the board and the buttons
         JPanel boardpanel = new JPanel();
         JPanel buttonpanel = new JPanel();
         boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
 
+        //Creates the undo button
         undoButton = new JButton("Undo");
         undoButton.addActionListener(listener);
 
 
+        //This loop will iterate through each square of the board.  If it finds a spot where
+        //no piece belongs at the beginning of the game, it will not place a piece.  Otherwise,
+        //it will place an appropriate piece of the correct color.
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
+                //Places an empty space if no piece belongs there at the start of the game
                 if (model.pieceAt(r, c) == null) {
                     board[r][c] = new JButton("", null);
                     board[r][c].addActionListener(listener);
+                //Places white pieces in their proper locations
                 } else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     placeWhitePieces(r, c);
+                //Places black pieces in their proper locations
                 } else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     placeBlackPieces(r, c);
                 }
 
+                //Sets the proper background color depending upon the square
                 setBackGroundColor(r, c);
                 boardpanel.add(board[r][c]);
             }
         }
+        //Customizing the location and the size of the board, as well as the button location
         add(boardpanel, BorderLayout.WEST);
         boardpanel.setPreferredSize(new Dimension(600, 600));
         add(buttonpanel);
@@ -66,6 +92,13 @@ public class ChessPanel extends JPanel {
         firstTurnFlag = true;
     }
 
+    /**
+     * This method will set the color of each background square alternating between
+     * light gray and white.
+     *
+     * @param r Row
+     * @param c Column
+     */
     private void setBackGroundColor(int r, int c) {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
             board[r][c].setBackground(Color.LIGHT_GRAY);
@@ -74,6 +107,11 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /**
+     * This method will place the white pieces in their proper location
+     * @param r Row
+     * @param c Column
+     */
     private void placeWhitePieces(int r, int c) {
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, wPawn);
@@ -96,6 +134,11 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /**
+     * This method will place the black pieces in their proper locations
+     * @param r Row
+     * @param c Column
+     */
     private void placeBlackPieces(int r, int c) {
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, bPawn);
@@ -118,6 +161,10 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /**
+     * This method will search the location as directed in order to find
+     * the appropriate image to represent each piece.
+     */
     private void createIcons() {
         // Sets the Image for white player pieces
         wRook = new ImageIcon("wRook.png");
@@ -135,13 +182,19 @@ public class ChessPanel extends JPanel {
         bKnight = new ImageIcon("bKnight.png");
     }
 
-    // method that updates the board
+    /**
+     * This method will display the board and then refresh it as needed, all
+     * while keeping track of their current locations
+     */
     private void displayBoard() {
 
+        //Looping through each square to determine whether or not to place a piece
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++)
+                //Place nothing in the event of null
                 if (model.pieceAt(r, c) == null)
                     board[r][c].setIcon(null);
+                //Places white image icons of the appropriate type
                 else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(wPawn);
@@ -161,6 +214,7 @@ public class ChessPanel extends JPanel {
                     if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(wKing);
 
+                    //Places black image icons of the appropriate type
                 } else if (model.pieceAt(r, c).player() == Player.BLACK)  {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(bPawn);
@@ -181,6 +235,7 @@ public class ChessPanel extends JPanel {
                         board[r][c].setIcon(bKing);
                 }
         }
+        //Refreshes the board
         repaint();
     }
 

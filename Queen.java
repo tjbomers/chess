@@ -32,7 +32,6 @@ public class Queen extends ChessPiece {
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		//Incorporates the bishop moveset
-
 		Bishop move1 = new Bishop(board[move.fromRow][move.fromColumn].player());
 		//Incorporates the rook moveset
 		Rook move2 = new Rook(board[move.fromRow][move.fromColumn].player());
