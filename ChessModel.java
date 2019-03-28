@@ -70,7 +70,6 @@ public class ChessModel implements IChessModel {
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 		backups.add(deepCopy(board));
-		System.out.println(player);
 		this.setNextPlayer();
 		if (player == Player.BLACK) {
 			System.out.println("Calling AI");
@@ -89,11 +88,12 @@ public class ChessModel implements IChessModel {
 			backups.remove(backups.size() - 1);
 		}
 		for(int i = 0; i < d; i++) {
-
+			player.next();
 		}
 	}
 
 	public boolean inCheck(Player p) {
+		/*
 	    Move testMove;
         for(int fromRow = 0; fromRow < 8; fromRow ++) {
             for (int fromCol = 0; fromCol < 8; fromCol++) {
@@ -101,16 +101,20 @@ public class ChessModel implements IChessModel {
                     for (int toRow = 0; toRow < 8; toRow++) {
                         for (int toCol = 0; toCol < 8; toCol++) {
                             testMove = new Move(fromRow, fromCol, toRow, toCol);
-                            if (isValidMove(testMove) && board[toRow][toCol].type().equals("King")) {
-                            	JOptionPane.showMessageDialog(null,
-										"Enemy King is currently in check)");
-                                return true;
+                            System.out.println(fromRow +" " +  fromCol + " " + toRow + " " + toCol);
+                            if (isValidMove(testMove)) {
+                            	if (board[toRow][toCol].type().equals("King")) {
+									//JOptionPane.showMessageDialog(null,
+									//		"Enemy King is currently in check)");
+									return true;
+								}
                             }
                         }
                     }
                 }
             }
         }
+        */
 	    return false;
 	}
 
@@ -151,6 +155,7 @@ public class ChessModel implements IChessModel {
 		IChessPiece[][] testBoard = new IChessPiece[8][8];
 
 		//if the AI is in check, gets out of check with the first solution it sees
+		System.out.println("Save King?");
 		if(inCheck(Player.BLACK)) {
 			for(int fromRow = 0; fromRow < 8; fromRow ++) {
 				for (int fromCol = 0; fromCol < 8; fromCol++) {
@@ -175,13 +180,14 @@ public class ChessModel implements IChessModel {
 		}
 
 		//if the AI is not in check it tries to kill an enemy piece
+		System.out.println("Murder?");
 		for(int fromRow = 0; fromRow < 8; fromRow ++) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
 				if(board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
 					for (int toRow = 0; toRow < 8; toRow ++) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
-							if(isValidMove(testMove) && board[toRow][toCol].player() == Player.BLACK) {
+							if(isValidMove(testMove) && (board[toRow][toCol] != null) && (board[toRow][toCol].player() == Player.WHITE)) {
 							    if(!(isValidMove(theMove))) {
                                     theMove.toColumn = testMove.toColumn;
                                     theMove.toRow = testMove.toRow;
@@ -224,15 +230,17 @@ public class ChessModel implements IChessModel {
         }
 
 		//random valid move
+		System.out.println("Basic Move?");
 		for(int fromRow = 7; fromRow >=0; fromRow --) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
 				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
-					for (int toRow = fromRow; toRow >= 0; toRow--) {
+					for (int toRow = fromRow - 1; toRow >= 0; toRow--) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
 							if(isValidMove(testMove)) {
 								move(testMove);
 								System.out.println("Moved Smartly!");
+								return;
 							}
 						}
 					}
@@ -248,6 +256,7 @@ public class ChessModel implements IChessModel {
 							if(isValidMove(testMove)) {
 								move(testMove);
 								System.out.println("Moved like an Idiot!");
+								return;
 							}
 						}
 					}

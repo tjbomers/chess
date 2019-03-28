@@ -29,6 +29,32 @@ public class Bishop extends ChessPiece {
 	 * @return Will return true if the move is valid
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
+		System.out.println("Bishop Move Checking");
+		System.out.println(move.fromRow + "" + move.fromColumn + "" + move.toRow + "" + move.toColumn);
+
+		//This will check and see if the Bishop is trying to move straight up,
+		//down, left, or right.  If so, the move is invalid.
+		if (move.fromRow == move.toRow || move.fromColumn == move.toColumn) {
+			return false;
+		}
+		//This will check to see if the Bishop is moving at a 45 degree angle.  This
+		//is accomplished by checking to see if it moves the same number of horizontal
+		//spaces as it does vertical spaces
+		if (board[move.fromRow][move.fromColumn] == board[move.toRow][move.toColumn]) {
+			return false;
+		}
+		if (Math.abs(move.fromRow - move.toRow) != (Math.abs(move.fromColumn - move.toColumn))) {
+			return false;
+		}
+		if (board[move.toRow][move.toColumn] != null) {
+			if (board[move.toRow][move.toColumn].player() == (board[move.fromRow][move.fromColumn].player())) {
+				return false;
+			}
+		}
+
+
+
+
 		int magnitude = Math.abs(move.fromRow - move.toRow);
 		int quadrant = -1;
 		if (move.toRow - move.fromRow < 0  && move.toColumn - move.fromColumn > 0) {
@@ -61,26 +87,7 @@ public class Bishop extends ChessPiece {
 			}
 		}
 
-		//This will check and see if the Bishop is trying to move straight up,
-		//down, left, or right.  If so, the move is invalid.
-		if (move.fromRow == move.toRow || move.fromColumn == move.toColumn) {
-			return false;
-		}
-
-		//This will check to see if the Bishop is moving at a 45 degree angle.  This
-		//is accomplished by checking to see if it moves the same number of horizontal
-		//spaces as it does vertical spaces
-		if (board[move.fromRow][move.fromColumn] != board[move.toRow][move.toColumn]) {
-			if (Math.abs(move.fromRow - move.toRow) == (Math.abs(move.fromColumn - move.toColumn))) {
-				if(board[move.toRow][move.toColumn] != null)
-					if(board[move.toRow][move.toColumn].player() == (board[move.fromRow][move.fromColumn].player())) {
-						return false;
-					}
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 }
