@@ -46,13 +46,13 @@ public class ChessModel implements IChessModel {
 
 		Move testMove;
 		if (inCheck(player.BLACK)) {
-			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
-					if (board[i][j].type().equals("King")) {
+			for (int fromRow = 0; fromRow < 8; fromRow++) {
+				for (int fromColumn = 0; fromColumn < 8; fromColumn++) {
+					if (board[fromRow][fromColumn].type().equals("King")) {
 						for (int x = -1; x < 2; x++) {
 							for (int y = -1; y < 2; y++) {
-								testMove = new Move(i, j, i + x, i + y);
-								if (isValidMove(testMove) && board[i + x][j + y].player() != Player.BLACK) {
+								testMove = new Move(fromRow, fromColumn, fromRow + x, fromColumn + y);
+								if (isValidMove(testMove) && board[fromRow + x][fromColumn + y].player() != Player.BLACK) {
 									for (int a = 0; a < 8; a++) {
 										for (int b = 0; b < 8; b++) {
 											if (board[a][b].player() == Player.WHITE) {
