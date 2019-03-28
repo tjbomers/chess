@@ -62,8 +62,10 @@ public class ChessModel implements IChessModel {
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 		backups.add(deepCopy(board));
+		System.out.println(player);
 		this.setNextPlayer();
 		if (player == Player.BLACK) {
+			System.out.println("Calling AI");
 			AI();
 		}
 	}
@@ -167,7 +169,7 @@ public class ChessModel implements IChessModel {
 		//if the AI is not in check it tries to kill an enemy piece
 		for(int fromRow = 0; fromRow < 8; fromRow ++) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
-				if(board[fromRow][fromCol].player() == Player.BLACK) {
+				if(board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
 					for (int toRow = 0; toRow < 8; toRow ++) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
@@ -216,7 +218,7 @@ public class ChessModel implements IChessModel {
 		//random valid move
 		for(int fromRow = 7; fromRow >=0; fromRow --) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
-				if (board[fromRow][fromCol].player() == Player.BLACK) {
+				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
 					for (int toRow = fromRow; toRow >= 0; toRow--) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
@@ -229,9 +231,9 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		}
-		for(int fromRow = 7; fromRow >=0; fromRow ++) {
+		for(int fromRow = 7; fromRow >=0; fromRow --) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
-				if (board[fromRow][fromCol].player() == Player.BLACK) {
+				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
 					for (int toRow = 0; toRow < 8; toRow++) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
@@ -244,7 +246,7 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		}
-
+		System.out.println("AI did nothing like a useless idiot");
 	}
 
 	private static IChessPiece[][] deepCopy(IChessPiece[][] original) {
