@@ -79,8 +79,18 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean inCheck(Player p) {
-		boolean valid = false;
-		return valid;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[i][j].player() != null) {
+					if (board[move.toRow][move.toColumn].isValidMove()) {
+
+
+						}
+
+					}
+				}
+			}
+		}
 	}
 
 
