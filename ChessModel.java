@@ -43,8 +43,16 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean isComplete() {
-		boolean valid = false;
-		return valid;
+	//	Move testMove;
+		//if (inCheck(player)) {
+		//	for (int fromRow = 0; fromRow < 8; fromRow++) {
+		//		for (int fromCol = 0; fromCol < 8; fromCol++) {
+
+		//		}
+		//		testMove = new Move(fromRow, fromCol, toRow, toCol);
+		//	}
+		//}
+		return false;
 	}
 
 	public boolean isValidMove(Move move) {
