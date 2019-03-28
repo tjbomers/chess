@@ -61,6 +61,9 @@ public class ChessModel implements IChessModel {
 		board[move.fromRow][move.fromColumn] = null;
 		backups.add(deepCopy(board));
 		this.setNextPlayer();
+		if (player == Player.BLACK) {
+			AI();
+		}
 	}
 
 	public void undo(int d) {
@@ -107,20 +110,37 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void AI() {
+		Move theMove;
+		Move testMove;
+
+		if(inCheck(Player.BLACK)) {
+			//TODO
+		}
+
+		for(int fromRow = 0; fromRow < 8; fromRow ++) {
+			for (int fromCol = 0; fromCol < 8; fromCol++) {
+				if(board[fromRow][fromCol].player() == Player.BLACK) {
+					for (int toRow = 0; toRow < 8; toRow ++) {
+						for (int toCol = 0; toCol < 8; toCol++) {
+							testMove = new Move(fromRow, fromCol, toRow, toCol);
+							if(isValidMove(testMove) && board[toRow][toCol].player() == Player.BLACK) {
+								//TODO if(board[toRow][toCol].
+							}
+						}
+					}
+				}
+			}
+		}
 		/*
-		 * Write a simple AI set of rules in the following order. 
-		 * a. Check to see if you are in check.
-		 * 		i. If so, get out of check by moving the king or placing a piece to block the check 
-		 * 
-		 * b. Attempt to put opponent into check (or checkmate). 
+		 * b. Attempt to put opponent into check (or checkmate).
 		 * 		i. Attempt to put opponent into check without losing your piece
-		 *		ii. Perhaps you have won the game. 
+		 *		ii. Perhaps you have won the game.
 		 *
-		 *c. Determine if any of your pieces are in danger, 
-		 *		i. Move them if you can. 
-		 *		ii. Attempt to protect that piece. 
+		 *c. Determine if any of your pieces are in danger,
+		 *		i. Move them if you can.
+		 *		ii. Attempt to protect that piece.
 		 *
-		 *d. Move a piece (pawns first) forward toward opponent king 
+		 *d. Move a piece (pawns first) forward toward opponent king
 		 *		i. check to see if that piece is in danger of being removed, if so, move a different piece.
 		 */
 

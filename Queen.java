@@ -40,4 +40,8 @@ public class Queen extends ChessPiece {
 
 		return (move1.isValidMove(move, board) || move2.isValidMove(move, board));
 	}
+
+	public int score() {
+		return 9;
+	}
 }

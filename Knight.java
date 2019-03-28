@@ -41,4 +41,8 @@ public class Knight extends ChessPiece {
 		}
 		return false;
 	}
+
+	public int score() {
+		return 3;
+	}
 }
