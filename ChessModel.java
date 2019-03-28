@@ -78,7 +78,7 @@ public class ChessModel implements IChessModel {
 		}
 	}
 
-	public boolean inCheck(Player p) {
+	public boolean inCheck(IChessPiece[][] board, Move p) {
 		boolean valid = false;
 		return valid;
 	}
