@@ -59,15 +59,12 @@ public class ChessModel implements IChessModel {
 								}
 							} else {
 								undo(1);
-								return true;
 							}
 						}
 					}
 				}
 			}
 		}
-
-
 		return true;
 	}
 
