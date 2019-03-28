@@ -102,7 +102,4 @@ public class Pawn extends ChessPiece {
 		return false;
 	}
 
-	public int score() {
-		return 1;
-	}
 }

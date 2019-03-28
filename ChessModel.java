@@ -115,7 +115,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void AI() {
-		Move theMove;
+		Move theMove = new Move(0, 0, 0, 0);
 		Move testMove;
 		IChessPiece[][] testBoard = new IChessPiece[8][8];
 
@@ -150,13 +150,43 @@ public class ChessModel implements IChessModel {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
 							if(isValidMove(testMove) && board[toRow][toCol].player() == Player.BLACK) {
-								//TODO
+							    if(!(isValidMove(theMove))) {
+                                    theMove.toColumn = testMove.toColumn;
+                                    theMove.toRow = testMove.toRow;
+                                    theMove.fromColumn = testMove.fromColumn;
+                                    theMove.fromRow = testMove.fromRow;
+                                } else if(board[testMove.toRow][testMove.toColumn].type() != board[theMove.toRow][theMove.toColumn].type()) {
+							        if (board[testMove.toRow][testMove.toColumn].type().equals("Queen")) {
+                                        move(testMove);
+                                        return;
+                                    } else if (board[theMove.toRow][theMove.toColumn].type().equals("Pawn")) {
+                                        theMove.toColumn = testMove.toColumn;
+                                        theMove.toRow = testMove.toRow;
+                                        theMove.fromColumn = testMove.fromColumn;
+                                        theMove.fromRow = testMove.fromRow;
+                                    } else if(board[theMove.toRow][theMove.toColumn].type().equals("Knight")) {
+                                        theMove.toColumn = testMove.toColumn;
+                                        theMove.toRow = testMove.toRow;
+                                        theMove.fromColumn = testMove.fromColumn;
+                                        theMove.fromRow = testMove.fromRow;
+                                    } else if(board[theMove.toRow][theMove.toColumn].type().equals("Bishop")) {
+                                        theMove.toColumn = testMove.toColumn;
+                                        theMove.toRow = testMove.toRow;
+                                        theMove.fromColumn = testMove.fromColumn;
+                                        theMove.fromRow = testMove.fromRow;
+                                    }
+                                }
+
 							}
 						}
 					}
 				}
 			}
 		}
+		if(isValidMove(theMove)) {
+		    move(theMove);
+		    return;
+        }
 		/*
 		 * b. Attempt to put opponent into check (or checkmate).
 		 * 		i. Attempt to put opponent into check without losing your piece
