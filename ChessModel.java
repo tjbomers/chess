@@ -93,7 +93,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void undo(int d) {
-		if(backups.size() > d ) {
+		if(backups.size() > d) {
 			board = backups.get(backups.size() - 1 - d);
 			for(int i = 0; i < d; i++) {
 				player.next();
@@ -104,16 +104,16 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean inCheck(Player p) {
-
+		System.out.println(p);
 	    Move testMove;
         for(int fromRow = 0; fromRow < 8; fromRow ++) {
             for (int fromCol = 0; fromCol < 8; fromCol++) {
-                if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == p) {
+                if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() != p) {
                     for (int toRow = 0; toRow < 8; toRow++) {
                         for (int toCol = 0; toCol < 8; toCol++) {
                             testMove = new Move(fromRow, fromCol, toRow, toCol);
-                            System.out.println(fromRow +" " +  fromCol + " " + toRow + " " + toCol);
                             if (isValidMove(testMove)) {
+                            	System.out.println("testing valid move");
                             	if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
 									JOptionPane.showMessageDialog(null,
 											"" + p + "  King is currently in check!");
@@ -187,7 +187,10 @@ public class ChessModel implements IChessModel {
 					}
 				}
 			}
+		} else {
+			System.out.println("King safe");
 		}
+
 
 		//if the AI is not in check it tries to kill an enemy piece
 		System.out.println("Murder?");
