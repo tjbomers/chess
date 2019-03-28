@@ -41,19 +41,26 @@ public class Bishop extends ChessPiece {
 		if (board[move.fromRow][move.fromColumn] == board[move.toRow][move.toColumn]) {
 			return false;
 		}
+		//This will check the absolute value when comparing the number of rows moved and
+		//the number of columns moved.  If they are unequal, this is an invalid move since
+		//the Bishop is not moving on a diagonal.
 		if (Math.abs(move.fromRow - move.toRow) != (Math.abs(move.fromColumn - move.toColumn))) {
 			return false;
 		}
+		//This will check and see if there is a piece in the way.  If that piece is the player's
+		//own piece, then the Bishop cannot move there.
 		if (board[move.toRow][move.toColumn] != null) {
 			if (board[move.toRow][move.toColumn].player() == (board[move.fromRow][move.fromColumn].player())) {
 				return false;
 			}
 		}
 
-
-
-
+		//This will check to see how many rows the Bishop is moving in total.  This will
+		//be used in a later for loop to check for pieces in the way.
 		int magnitude = Math.abs(move.fromRow - move.toRow);
+
+		//This separates the space surrounding the Bishop into four quadrants.  With each
+		//quadrant comes a different set of math to determine the validity of a move.
 		int quadrant = -1;
 		if (move.toRow - move.fromRow < 0  && move.toColumn - move.fromColumn > 0) {
 			quadrant = 1;
@@ -65,6 +72,9 @@ public class Bishop extends ChessPiece {
 			quadrant = 4;
 		}
 
+		//This for loop will iterate through each step in the Bishop's path, with different
+		//conditions depending on which quadrant the move falls under.  If at any point in
+		//the move the Bishop runs into a piece (!= null), the proposed move is invalid.
 		for (int i = 1; i < magnitude; i++) {
 			if(quadrant == 1) {
 				if(board[move.fromRow - i][move.fromColumn + i] != null) {
