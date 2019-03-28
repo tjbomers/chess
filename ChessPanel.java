@@ -32,7 +32,7 @@ public class ChessPanel extends JPanel {
     //Checks if it is the first turn
     private boolean firstTurnFlag;
     //Establishes the row and column variables that will be used in many calculations
-    //when determining proper rulesets of pieces.
+    //when determining proper movesets of pieces.
     private int fromRow;
     private int toRow;
     private int fromCol;
@@ -100,6 +100,7 @@ public class ChessPanel extends JPanel {
      * @param c Column
      */
     private void setBackGroundColor(int r, int c) {
+        //The math formula within will make sure the squares alternate in color
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
             board[r][c].setBackground(Color.LIGHT_GRAY);
         } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
@@ -113,6 +114,8 @@ public class ChessPanel extends JPanel {
      * @param c Column
      */
     private void placeWhitePieces(int r, int c) {
+        //This will check what piece is on the board.  After that, it will add the
+        //action listener for that piece.
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, wPawn);
             board[r][c].addActionListener(listener);
@@ -140,6 +143,8 @@ public class ChessPanel extends JPanel {
      * @param c Column
      */
     private void placeBlackPieces(int r, int c) {
+        //This will check what piece is on the board.  After that, it will add the
+        //action listener for that piece.
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, bPawn);
             board[r][c].addActionListener(listener);
@@ -259,6 +264,8 @@ public class ChessPanel extends JPanel {
                                 displayBoard();
                             }
                         }
+            //This will undo the previous move and can be done multiple times in
+            //the course of the game
             if (undoButton == event.getSource()) {
                 model.undo(2);
                 displayBoard();

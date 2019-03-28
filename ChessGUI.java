@@ -2,10 +2,16 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+/**************************************
+ * This is the class that will set up the GUI for the game.
+ *
+ * Project created by Tim Bomers, Matt Hendrick, and Maggie Oliver
+ *
+ **************************************/
 public class ChessGUI {
 
     /**
-     * even more comments X 2
+     * This is the main method that will start up the game
      */
     public static void main(String[] args) {
         JFrame frame = new JFrame("Chess Game");
