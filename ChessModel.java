@@ -59,15 +59,12 @@ public class ChessModel implements IChessModel {
 								}
 							} else {
 								undo(1);
-								return true;
 							}
 						}
 					}
 				}
 			}
 		}
-
-
 		return true;
 	}
 
@@ -111,12 +108,10 @@ public class ChessModel implements IChessModel {
 
 	public boolean inCheck(Player p) {
 		boolean fixPlayer = false;
-		//if (player ) {
-		//	player.next();
-		//	fixPlayer = true;
-		//}
-		System.out.println(p);
-		System.out.println(player);
+		if (player  == p) {
+			setNextPlayer();
+			fixPlayer = true;
+		}
 	    Move testMove;
         for(int fromRow = 0; fromRow < 8; fromRow ++) {
             for (int fromCol = 0; fromCol < 8; fromCol++) {
@@ -125,12 +120,11 @@ public class ChessModel implements IChessModel {
                         for (int toCol = 0; toCol < 8; toCol++) {
                             testMove = new Move(fromRow, fromCol, toRow, toCol);
                             if (isValidMove(testMove)) {
-                            	System.out.println("testing valid move");
                             	if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
 									JOptionPane.showMessageDialog(null,
 											"" + p + "  King is currently in check!");
 									if(fixPlayer)
-										player.next();
+										setNextPlayer();
 									return true;
 								}
                             }
@@ -140,7 +134,7 @@ public class ChessModel implements IChessModel {
             }
         }
         if(fixPlayer)
-        	player.next();
+        	setNextPlayer();
 	    return false;
 	}
 
