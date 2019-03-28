@@ -13,7 +13,7 @@ public class ChessModel implements IChessModel {
 
 	public ChessModel() {
 		board = new IChessPiece[8][8];
-		player = Player.BLACK;
+		player = Player.WHITE;
 
         board[7][0] = new Rook(Player.WHITE);
         board[7][1] = new Knight(Player.WHITE);
