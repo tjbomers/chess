@@ -103,7 +103,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean inCheck(Player p) {
-		/*
+
 	    Move testMove;
         for(int fromRow = 0; fromRow < 8; fromRow ++) {
             for (int fromCol = 0; fromCol < 8; fromCol++) {
@@ -113,7 +113,7 @@ public class ChessModel implements IChessModel {
                             testMove = new Move(fromRow, fromCol, toRow, toCol);
                             System.out.println(fromRow +" " +  fromCol + " " + toRow + " " + toCol);
                             if (isValidMove(testMove)) {
-                            	if (board[toRow][toCol].type().equals("King")) {
+                            	if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
 									//JOptionPane.showMessageDialog(null,
 									//		"Enemy King is currently in check)");
 									return true;
@@ -124,7 +124,6 @@ public class ChessModel implements IChessModel {
                 }
             }
         }
-        */
 	    return false;
 	}
 
