@@ -66,6 +66,11 @@ public class ChessModel implements IChessModel {
 		}
 	}
 
+	public static void staticMove(IChessPiece[][] board, Move move) {
+		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
+		board[move.fromRow][move.fromColumn] = null;
+	}
+
 	public void undo(int d) {
 		if(backups.size() > d ) {
 			board = backups.get(backups.size() - 1 - d);
@@ -112,11 +117,28 @@ public class ChessModel implements IChessModel {
 	public void AI() {
 		Move theMove;
 		Move testMove;
+		IChessPiece[][] testBoard = new IChessPiece[8][8];
 
+		//if the AI is in check, gets out of check with the first solution it sees
 		if(inCheck(Player.BLACK)) {
-			//TODO
+			for(int fromRow = 0; fromRow < 8; fromRow ++) {
+				for (int fromCol = 0; fromCol < 8; fromCol++) {
+					if(board[fromRow][fromCol].player() == Player.BLACK) {
+						for (int toRow = 0; toRow < 8; toRow ++) {
+							for (int toCol = 0; toCol < 8; toCol++) {
+								testMove = new Move(fromRow, fromCol, toRow, toCol);
+
+								if(isValidMove(testMove)) {
+
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
+		//if the AI is not in check it tries to kill an enemy piece
 		for(int fromRow = 0; fromRow < 8; fromRow ++) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
 				if(board[fromRow][fromCol].player() == Player.BLACK) {
@@ -124,7 +146,7 @@ public class ChessModel implements IChessModel {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
 							if(isValidMove(testMove) && board[toRow][toCol].player() == Player.BLACK) {
-								//TODO if(board[toRow][toCol].
+								//TODO
 							}
 						}
 					}
