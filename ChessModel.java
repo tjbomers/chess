@@ -85,7 +85,6 @@ public class ChessModel implements IChessModel {
 		backups.add(deepCopy(board));
 		this.setNextPlayer();
 		if (player == Player.BLACK) {
-			System.out.println("Calling AI");
 			AI();
 		}
 	}
@@ -175,7 +174,6 @@ public class ChessModel implements IChessModel {
 		IChessPiece[][] testBoard = new IChessPiece[8][8];
 
 		//if the AI is in check, gets out of check with the first solution it sees
-		System.out.println("Save King?");
 		if(inCheck(Player.BLACK)) {
 			for(int fromRow = 0; fromRow < 8; fromRow ++) {
 				for (int fromCol = 0; fromCol < 8; fromCol++) {
@@ -188,7 +186,6 @@ public class ChessModel implements IChessModel {
 									if(inCheck(Player.BLACK)) {
 										undo(1);
 									} else {
-										System.out.println("Dodged a Check!");
 										return;
 									}
 								}
@@ -198,12 +195,10 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		} else {
-			System.out.println("King safe");
 		}
 
 
 		//if the AI is not in check it tries to kill an enemy piece
-		System.out.println("Murder?");
 		for(int fromRow = 0; fromRow < 8; fromRow ++) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
 				if(board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
@@ -220,7 +215,6 @@ public class ChessModel implements IChessModel {
 										!= board[theMove.toRow][theMove.toColumn].type()) {
 							        if (board[testMove.toRow][testMove.toColumn].type().equals("Queen")) {
                                         move(testMove);
-                                        System.out.println("Attacked the Queen!");
                                         return;
                                     } else if (board[theMove.toRow][theMove.toColumn].type().equals("Pawn")) {
                                         theMove.toColumn = testMove.toColumn;
@@ -248,12 +242,10 @@ public class ChessModel implements IChessModel {
 		}
 		if(isValidMove(theMove)) {
 		    move(theMove);
-		    System.out.println("Attacked a Piece!");
 		    return;
         }
 
 		//random valid move
-		System.out.println("Basic Move?");
 		for(int fromRow = 7; fromRow >=0; fromRow --) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
 				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
@@ -262,7 +254,6 @@ public class ChessModel implements IChessModel {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
 							if(isValidMove(testMove)) {
 								move(testMove);
-								System.out.println("Moved Smartly!");
 								return;
 							}
 						}
@@ -278,7 +269,6 @@ public class ChessModel implements IChessModel {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
 							if(isValidMove(testMove)) {
 								move(testMove);
-								System.out.println("Moved like an Idiot!");
 								return;
 							}
 						}
@@ -286,7 +276,6 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		}
-		System.out.println("AI did nothing like a useless idiot");
 	}
 
 	private static IChessPiece[][] deepCopy(IChessPiece[][] original) {
