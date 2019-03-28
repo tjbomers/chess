@@ -29,8 +29,6 @@ public class Bishop extends ChessPiece {
 	 * @return Will return true if the move is valid
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
-		System.out.println("Bishop Move Checking");
-		System.out.println(move.fromRow + "" + move.fromColumn + "" + move.toRow + "" + move.toColumn);
 
 		//This will check and see if the Bishop is trying to move straight up,
 		//down, left, or right.  If so, the move is invalid.
