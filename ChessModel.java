@@ -43,7 +43,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean isComplete() {
-		/*
+
 		Move testMove;
 		if (inCheck(player.BLACK)) {
 			for (int i = 0; i < 8; i++) {
@@ -67,7 +67,7 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		}
-		*/
+
 		return false;
 	}
 
