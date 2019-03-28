@@ -79,18 +79,22 @@ public class ChessModel implements IChessModel {
 	}
 
 	public boolean inCheck(Player p) {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				if (board[i][j].player() != null) {
-					if (board[move.toRow][move.toColumn].isValidMove()) {
-
-
-						}
-
-					}
-				}
-			}
-		}
+	    Move testMove;
+        for(int fromRow = 0; fromRow < 8; fromRow ++) {
+            for (int fromCol = 0; fromCol < 8; fromCol++) {
+                if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == p) {
+                    for (int toRow = 0; toRow < 8; toRow++) {
+                        for (int toCol = 0; toCol < 8; toCol++) {
+                            testMove = new Move(fromRow, fromCol, toRow, toCol);
+                            if (isValidMove(testMove) && board[toRow][toCol].type().equals("King")) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+	    return false;
 	}
 
 
