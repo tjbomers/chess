@@ -127,9 +127,13 @@ public class ChessModel implements IChessModel {
 						for (int toRow = 0; toRow < 8; toRow ++) {
 							for (int toCol = 0; toCol < 8; toCol++) {
 								testMove = new Move(fromRow, fromCol, toRow, toCol);
-
 								if(isValidMove(testMove)) {
-
+									move(testMove);
+									if(inCheck(Player.BLACK)) {
+										undo(1);
+									} else {
+										return;
+									}
 								}
 							}
 						}
