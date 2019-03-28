@@ -65,7 +65,7 @@ public abstract class ChessPiece implements IChessPiece {
 		}
 
 		// Checks to see if an actual move has been made.  If so, mark as true.
-		if (((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn)) == false) {
+		if (!((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn))) {
 			return true;
 		}
 

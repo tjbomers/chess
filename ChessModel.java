@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChessModel implements IChessModel {
@@ -36,7 +37,7 @@ public class ChessModel implements IChessModel {
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
-		backups.add(board.clone());
+		backups.add(deepCopy(board));
 	}
 
 	public boolean isComplete() {
@@ -52,21 +53,20 @@ public class ChessModel implements IChessModel {
 				if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
 					valid = true;
 			}
-
 		return valid;
 	}
 
 	public void move(Move move) {
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
-		backups.add(board.clone());
+		backups.add(deepCopy(board));
 		this.setNextPlayer();
 	}
 
 	public void undo(int d) {
 		if(backups.size() > d ) {
-			System.out.println("Take it back now y'all" + backups.size());
 			board = backups.get(backups.size() - 1 - d);
+			backups.remove(backups.size() - 1);
 		}
 	}
 
@@ -124,5 +124,19 @@ public class ChessModel implements IChessModel {
 		 *		i. check to see if that piece is in danger of being removed, if so, move a different piece.
 		 */
 
+	}
+
+	private static IChessPiece[][] deepCopy(IChessPiece[][] original) {
+		if (original == null) {
+			return null;
 		}
+
+		final IChessPiece[][] result = new IChessPiece[8][8];
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				result[i][j] = original[i][j];
+			}
+		}
+		return result;
+	}
 }
