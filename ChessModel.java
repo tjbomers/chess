@@ -45,22 +45,21 @@ public class ChessModel implements IChessModel {
 	public boolean isComplete() {
 
 		Move testMove;
-		if (inCheck(player.BLACK)) {
-			for (int fromRow = 0; fromRow < 8; fromRow++) {
-				for (int fromColumn = 0; fromColumn < 8; fromColumn++) {
-					if (board[fromRow][fromColumn].type().equals("King")) {
-						for (int x = -1; x < 2; x++) {
-							for (int y = -1; y < 2; y++) {
-								testMove = new Move(fromRow, fromColumn, fromRow + x, fromColumn + y);
-								if (isValidMove(testMove) && board[fromRow + x][fromColumn + y].player() != Player.BLACK) {
-									for (int a = 0; a < 8; a++) {
-										for (int b = 0; b < 8; b++) {
-											if (board[a][b].player() == Player.WHITE) {
-												if (isValidMove(testMove)) && board[a][b].type().equals("King")
-											}
-										}
-									}
+		for (int fromRow = 0; fromRow < 8; fromRow++) {
+			for (int fromCol = 0; fromCol < 8; fromCol++) {
+				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == player) {
+					for (int toRow = 0; toRow < 8; toRow++) {
+						for (int toCol = 0; toCol < 8; toCol++) {
+							testMove = new Move(fromRow, fromCol, toRow, toCol);
+							move(testMove);
+							if (isValidMove(testMove)) {
+								if(!inCheck(player)) {
+									undo(1);
+									return false;
 								}
+							} else {
+								undo(1);
+								return true;
 							}
 						}
 					}
@@ -68,7 +67,8 @@ public class ChessModel implements IChessModel {
 			}
 		}
 
-		return false;
+
+		return true;
 	}
 
 	public boolean isValidMove(Move move) {
