@@ -95,11 +95,12 @@ public class ChessModel implements IChessModel {
 	public void undo(int d) {
 		if(backups.size() > d ) {
 			board = backups.get(backups.size() - 1 - d);
-			backups.remove(backups.size() - 1);
+			for(int i = 0; i < d; i++) {
+				player.next();
+				backups.remove(backups.size() - 1);
+			}
 		}
-		for(int i = 0; i < d; i++) {
-			player.next();
-		}
+
 	}
 
 	public boolean inCheck(Player p) {
@@ -114,8 +115,8 @@ public class ChessModel implements IChessModel {
                             System.out.println(fromRow +" " +  fromCol + " " + toRow + " " + toCol);
                             if (isValidMove(testMove)) {
                             	if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
-									//JOptionPane.showMessageDialog(null,
-									//		"Enemy King is currently in check)");
+									JOptionPane.showMessageDialog(null,
+											"" + p + "  King is currently in check!");
 									return true;
 								}
                             }
@@ -168,7 +169,7 @@ public class ChessModel implements IChessModel {
 		if(inCheck(Player.BLACK)) {
 			for(int fromRow = 0; fromRow < 8; fromRow ++) {
 				for (int fromCol = 0; fromCol < 8; fromCol++) {
-					if(board[fromRow][fromCol].player() == Player.BLACK) {
+					if(board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
 						for (int toRow = 0; toRow < 8; toRow ++) {
 							for (int toCol = 0; toCol < 8; toCol++) {
 								testMove = new Move(fromRow, fromCol, toRow, toCol);

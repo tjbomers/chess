@@ -205,7 +205,7 @@ public class ChessPanel extends JPanel {
                             }
                         }
             if (undoButton == event.getSource()) {
-                model.undo(1);
+                model.undo(2);
                 displayBoard();
             }
         }
