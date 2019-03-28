@@ -1,6 +1,8 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
@@ -90,6 +92,8 @@ public class ChessModel implements IChessModel {
                         for (int toCol = 0; toCol < 8; toCol++) {
                             testMove = new Move(fromRow, fromCol, toRow, toCol);
                             if (isValidMove(testMove) && board[toRow][toCol].type().equals("King")) {
+                            	JOptionPane.showMessageDialog(null,
+										"Enemy King is currently in check)");
                                 return true;
                             }
                         }
@@ -173,7 +177,8 @@ public class ChessModel implements IChessModel {
                                     theMove.toRow = testMove.toRow;
                                     theMove.fromColumn = testMove.fromColumn;
                                     theMove.fromRow = testMove.fromRow;
-                                } else if(board[testMove.toRow][testMove.toColumn].type() != board[theMove.toRow][theMove.toColumn].type()) {
+                                } else if(board[testMove.toRow][testMove.toColumn].type()
+										!= board[theMove.toRow][theMove.toColumn].type()) {
 							        if (board[testMove.toRow][testMove.toColumn].type().equals("Queen")) {
                                         move(testMove);
                                         System.out.println("Attacked the Queen!");
