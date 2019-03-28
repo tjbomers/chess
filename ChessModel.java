@@ -51,8 +51,8 @@ public class ChessModel implements IChessModel {
 					for (int toRow = 0; toRow < 8; toRow++) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
-							move(testMove);
 							if (isValidMove(testMove)) {
+								move(testMove);
 								if(!inCheck(player)) {
 									undo(1);
 									return false;
