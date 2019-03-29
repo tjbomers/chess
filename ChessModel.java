@@ -3,18 +3,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/***********************************************
+ * This class will establish the chess model, which will detail the general
+ * rules of the game, the piece locations, and an AI that a single player can
+ * play against.  There are also methods that provide warnings if the appropriate
+ * player is in check, and also a method to let a player know if he or she is
+ * in checkmate.
+ *
+ * Project created by Tim Bomers, Matt Hendrick, and Maggie Oliver
+ ***********************************************/
 public class ChessModel implements IChessModel {
+	//Creates an object with which we can place new piece objects
     private IChessPiece[][] board;
+	//This will add a backup array to be used
 	private List<IChessPiece[][]> backups = new ArrayList<IChessPiece[][]>();
+	//Creates a player object to be used in game situations
 	private Player player;
 
-	// declare other instance variables as needed
 
+	/**
+	 * This constructor will establish the locations on which the new piece objects
+	 * will be placed, as well as create a backup copy of the board.
+	 */
 	public ChessModel() {
+		//Creates an 8x8 array for the board
 		board = new IChessPiece[8][8];
+		//Chess tradition dictates that the person playing white goes first
 		player = Player.WHITE;
 
+		//Creates white piece objects in the proper board locations and establishes
+		//the owner of said pieces
         board[7][0] = new Rook(Player.WHITE);
         board[7][1] = new Knight(Player.WHITE);
         board[7][2] = new Bishop(Player.WHITE);
@@ -27,7 +45,8 @@ public class ChessModel implements IChessModel {
         	board[6][i] = new Pawn(Player.WHITE);
 		}
 
-
+		//Creates black piece objects in the proper board locations and establishes
+		//the owner of said pieces
 		board[0][0] = new Rook(Player.BLACK);
 		board[0][1] = new Knight(Player.BLACK);
 		board[0][2] = new Bishop(Player.BLACK);
@@ -39,21 +58,33 @@ public class ChessModel implements IChessModel {
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
+		//Creates a backup of the board
 		backups.add(deepCopy(board));
 	}
 
+
+	/**
+	 * This method will check to see if a player in check is actually in checkmate, in which
+	 * case they will lose the game.
+	 *
+	 * @return Returs true if the player is in checkmate, completing the game
+	 */
 	public boolean isComplete() {
 
 		if(inCheck(player)) {
 			Move testMove;
 			for (int fromRow = 0; fromRow < 8; fromRow++) {
 				for (int fromCol = 0; fromCol < 8; fromCol++) {
+					//Loops through the board and checks for non-empty spaces owned by the current player.
 					if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == player) {
 						for (int toRow = 0; toRow < 8; toRow++) {
 							for (int toCol = 0; toCol < 8; toCol++) {
+								//If a given move is valid, execute the move and check to see if the
+								//player is still in check
 								testMove = new Move(fromRow, fromCol, toRow, toCol);
 								if (isValidMove(testMove)) {
 									evaluateMove(testMove);
+									//If the player is no longer in check, the game is not complete
 									if(!inCheck(player)) {
 										undo(1);
 										return false;
@@ -66,6 +97,7 @@ public class ChessModel implements IChessModel {
 					}
 				}
 			}
+			//If all possible moves keep the player in check, the game is complete
 			JOptionPane.showMessageDialog(null,
 					"" + player + "  King is currently in checkmate! \n GAME OVER");
 			return true;
