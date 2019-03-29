@@ -3,34 +3,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/***********************************************
- * This class will establish the chess model, which will detail the general
- * rules of the game, the piece locations, and an AI that a single player can
- * play against.  There are also methods that provide warnings if the appropriate
- * player is in check, and also a method to let a player know if he or she is
- * in checkmate.
- *
- * Project created by Tim Bomers, Matt Hendrick, and Maggie Oliver
- ***********************************************/
+
 public class ChessModel implements IChessModel {
-	//Creates an object with which we can place new piece objects
     private IChessPiece[][] board;
-	//This will add a backup array to be used
 	private List<IChessPiece[][]> backups = new ArrayList<IChessPiece[][]>();
-	//Creates a player object to be used in game situations
 	private Player player;
 
-	/**
-	 * This constructor will establish the locations on which the new piece objects
-	 * will be placed, as well as create a backup copy of the board.
-	 */
+	// declare other instance variables as needed
+
 	public ChessModel() {
-		//Creates an 8x8 array for the board
 		board = new IChessPiece[8][8];
-		//Chess tradition dictates that the person playing white goes first
 		player = Player.WHITE;
-		//Creates white piece objects in the proper board locations and establishes
-		//the owner of said pieces
+
         board[7][0] = new Rook(Player.WHITE);
         board[7][1] = new Knight(Player.WHITE);
         board[7][2] = new Bishop(Player.WHITE);
@@ -43,8 +27,7 @@ public class ChessModel implements IChessModel {
         	board[6][i] = new Pawn(Player.WHITE);
 		}
 
-		//Creates black piece objects in the proper board locations and establishes
-		//the owner of said pieces
+
 		board[0][0] = new Rook(Player.BLACK);
 		board[0][1] = new Knight(Player.BLACK);
 		board[0][2] = new Bishop(Player.BLACK);
@@ -56,104 +39,86 @@ public class ChessModel implements IChessModel {
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
-		//Creates a backup of the board
 		backups.add(deepCopy(board));
 	}
 
-	/**
-	 * This method will check to see if a player in check is actually in checkmate, in which
-	 * case they will lose the game.
-	 *
-	 * @return Returs true if the player is in checkmate, completing the game
-	 */
 	public boolean isComplete() {
-		//Loops through the board and checks for non-empty spaces owned by the current player.
-		Move testMove;
-		for (int fromRow = 0; fromRow < 8; fromRow++) {
-			for (int fromCol = 0; fromCol < 8; fromCol++) {
-				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == player) {
-					//Loops through the board destinations and creates test moves for the player
-					for (int toRow = 0; toRow < 8; toRow++) {
-						for (int toCol = 0; toCol < 8; toCol++) {
-							//If a given move is valid, execute the move and check to see if the
-							//player is still in check
-							testMove = new Move(fromRow, fromCol, toRow, toCol);
-							if (isValidMove(testMove)) {
-								move(testMove);
-								//If the player is no longer in check, the game is not complete
-								if(!inCheck(player)) {
-									undo(1);
-									return false;
+
+		if(inCheck(player)) {
+			Move testMove;
+			for (int fromRow = 0; fromRow < 8; fromRow++) {
+				for (int fromCol = 0; fromCol < 8; fromCol++) {
+					if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == player) {
+						for (int toRow = 0; toRow < 8; toRow++) {
+							for (int toCol = 0; toCol < 8; toCol++) {
+								testMove = new Move(fromRow, fromCol, toRow, toCol);
+								if (isValidMove(testMove)) {
+									evaluateMove(testMove);
+									if(!inCheck(player)) {
+										undo(1);
+										return false;
+									}else {
+										undo(1);
+									}
 								}
-							} else {
-								undo(1);
 							}
 						}
 					}
 				}
 			}
+			JOptionPane.showMessageDialog(null,
+					"" + player + "  King is currently in checkmate! \n GAME OVER");
+			return true;
 		}
-		//If all possible moves keep the player in check, the game is complete
-		return true;
+		return false;
 	}
-	/**
-	 * This method checks for a valid move by the current player.
-	 *
-	 * @param move a (@link W18project3.Move) object describing the move to be made.
-	 * @return move is valid
-	 */
+
 	public boolean isValidMove(Move move) {
-		//Move is invalid by default and must meet conditions to make it valid
 		boolean valid = false;
 
-		//First, it checks the given space for a piece, then it checks to see if that
-		//piece is owned by the current player.  If both are true, then it checks to
-		//see if the move is valid.  If so, the move is approved and the player can move
-		//the piece.
 		if (board[move.fromRow][move.fromColumn] != null)
 			if (board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
 				if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
 					valid = true;
 			}
-		//Returns whether or not the move is valid
 		return valid;
 	}
 
-	/**
-	 * This method will establish a move and will then transition control to the next
-	 * player.
-	 *
-	 * @param move a (@link W18project3.Move) object describing the move to be made.
-	 */
 	public void move(Move move) {
-		//Changes the board state after the move is made and creates a backup in
-		//its image
+		System.out.println("testing");
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 		backups.add(deepCopy(board));
-		//Transitions control to the next player.  If the next player is controlling
-		//the black pieces, the AI method will be called.
-		this.setNextPlayer();
-		if (player == Player.BLACK) {
-			AI();
+		if (inCheck(Player.BLACK)) {
+			JOptionPane.showMessageDialog(null,
+					"BLACK  King is currently in check!");
 		}
+		if (inCheck(Player.WHITE)) {
+			JOptionPane.showMessageDialog(null,
+					"WHITE  King is currently in check!");
+		}
+		isComplete();
+		this.setNextPlayer();
+		isComplete();
+		//if (player == Player.BLACK) {
+		//	AI();
+		//}
 	}
 
-	/**
-	 * This method will allow players to undo multiple moves, effectively rewinding
-	 * the game state all the way to the beginning of the game.  This is done by
-	 * accessing the arraylist of backups, which players can go through one at a time.
-	 *
-	 * @param d The stop condition for the loop
-	 */
+	private void evaluateMove(Move move) {
+		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
+		board[move.fromRow][move.fromColumn] = null;
+	}
+
+	public static void staticMove(IChessPiece[][] board, Move move) {
+		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
+		board[move.fromRow][move.fromColumn] = null;
+	}
+
 	public void undo(int d) {
-		//Grabs the appropriate backup board state
 		if(backups.size() > d) {
 			board = backups.get(backups.size() - 1 - d);
 			for(int i = 0; i < d; i++) {
-				//Establishes the correct player and will remove any board states ahead
-				//of it (so any future board states from the desired backup location will
-				//be backed up appropriately.
 				player.next();
 				backups.remove(backups.size() - 1);
 			}
@@ -161,39 +126,21 @@ public class ChessModel implements IChessModel {
 
 	}
 
-	/**
-	 * This method will check the board to see if a king is in check.  When a player's
-	 * piece has a valid move that can attack the enemy colored king directly, that king
-	 * is considered to be "in check".  The enemy king will then have to move out of the
-	 * way of the piece(s) or have another piece block the threatening piece.
-	 *
-	 * @param  p (@link W18project3.Move) the Player being checked
-	 * @return Whether or not the king is in check
-	 */
 	public boolean inCheck(Player p) {
-		//This will pass the turn to the next player and then have that player attempt to
-		//remove their king from check.
 		boolean fixPlayer = false;
-		if (player == p) {
+		if (player  == p) {
 			setNextPlayer();
 			fixPlayer = true;
 		}
-		//Loops through the board and checks for pieces that are not owned by the current player
 	    Move testMove;
         for(int fromRow = 0; fromRow < 8; fromRow ++) {
             for (int fromCol = 0; fromCol < 8; fromCol++) {
                 if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() != p) {
                     for (int toRow = 0; toRow < 8; toRow++) {
                         for (int toCol = 0; toCol < 8; toCol++) {
-							//Checks the test moves to see if they are valid.  If so, then check
-							//to see if those moves target the king.  If so, notify the player that
-							//the king is in check.
                             testMove = new Move(fromRow, fromCol, toRow, toCol);
                             if (isValidMove(testMove)) {
                             	if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
-									JOptionPane.showMessageDialog(null,
-											"" + p + "  King is currently in check!");
-									//Pass the turn
 									if(fixPlayer)
 										setNextPlayer();
 									return true;
@@ -241,6 +188,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void AI() {
+		//AI called
 		Move theMove = new Move(0, 0, 0, 0);
 		Move testMove;
 		IChessPiece[][] testBoard = new IChessPiece[8][8];
