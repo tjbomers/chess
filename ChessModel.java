@@ -44,28 +44,33 @@ public class ChessModel implements IChessModel {
 
 	public boolean isComplete() {
 
-		Move testMove;
-		for (int fromRow = 0; fromRow < 8; fromRow++) {
-			for (int fromCol = 0; fromCol < 8; fromCol++) {
-				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == player) {
-					for (int toRow = 0; toRow < 8; toRow++) {
-						for (int toCol = 0; toCol < 8; toCol++) {
-							testMove = new Move(fromRow, fromCol, toRow, toCol);
-							if (isValidMove(testMove)) {
-								move(testMove);
-								if(!inCheck(player)) {
+		if(inCheck(player)) {
+			Move testMove;
+			for (int fromRow = 0; fromRow < 8; fromRow++) {
+				for (int fromCol = 0; fromCol < 8; fromCol++) {
+					if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == player) {
+						for (int toRow = 0; toRow < 8; toRow++) {
+							for (int toCol = 0; toCol < 8; toCol++) {
+								testMove = new Move(fromRow, fromCol, toRow, toCol);
+								if (isValidMove(testMove)) {
+									evaluateMove(testMove);
+									if(!inCheck(player)) {
+										undo(1);
+										return false;
+									}
+								} else {
 									undo(1);
-									return false;
 								}
-							} else {
-								undo(1);
 							}
 						}
 					}
 				}
 			}
+			JOptionPane.showMessageDialog(null,
+					"" + player + "  King is currently in checkmate! \n GAME OVER");
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	public boolean isValidMove(Move move) {
@@ -80,15 +85,29 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void move(Move move) {
+		System.out.println("testing");
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 		backups.add(deepCopy(board));
-		inCheck(Player.BLACK);
-		inCheck(Player.WHITE);
-		this.setNextPlayer();
-		if (player == Player.BLACK) {
-			AI();
+		if (inCheck(Player.BLACK)) {
+			JOptionPane.showMessageDialog(null,
+					"BLACK  King is currently in check!");
 		}
+		if (inCheck(Player.BLACK)) {
+			JOptionPane.showMessageDialog(null,
+					"WHITE  King is currently in check!");
+		}
+		isComplete();
+		this.setNextPlayer();
+		isComplete();
+		//if (player == Player.BLACK) {
+		//	AI();
+		//}
+	}
+
+	private void evaluateMove(Move move) {
+		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
+		board[move.fromRow][move.fromColumn] = null;
 	}
 
 	public static void staticMove(IChessPiece[][] board, Move move) {
@@ -122,8 +141,6 @@ public class ChessModel implements IChessModel {
                             testMove = new Move(fromRow, fromCol, toRow, toCol);
                             if (isValidMove(testMove)) {
                             	if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
-									JOptionPane.showMessageDialog(null,
-											"" + p + "  King is currently in check!");
 									if(fixPlayer)
 										setNextPlayer();
 									return true;
@@ -171,6 +188,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void AI() {
+		//AI called
 		Move theMove = new Move(0, 0, 0, 0);
 		Move testMove;
 		IChessPiece[][] testBoard = new IChessPiece[8][8];
