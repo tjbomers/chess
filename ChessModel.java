@@ -57,9 +57,9 @@ public class ChessModel implements IChessModel {
 									if(!inCheck(player)) {
 										undo(1);
 										return false;
+									}else {
+										undo(1);
 									}
-								} else {
-									undo(1);
 								}
 							}
 						}
@@ -93,7 +93,7 @@ public class ChessModel implements IChessModel {
 			JOptionPane.showMessageDialog(null,
 					"BLACK  King is currently in check!");
 		}
-		if (inCheck(Player.BLACK)) {
+		if (inCheck(Player.WHITE)) {
 			JOptionPane.showMessageDialog(null,
 					"WHITE  King is currently in check!");
 		}
