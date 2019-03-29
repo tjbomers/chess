@@ -1,9 +1,9 @@
-
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-public class ChessTest {
+
+public class ChessModelTest {
 
 
 
@@ -33,7 +33,7 @@ public class ChessTest {
         m.move(new Move(7, 0, 5, 0));
         assertTrue(m.pieceAt(5, 0).type().equals("Rook"));
 
-        move(new Move(6, 4, 4, 4));
+        m.move(new Move(6, 4, 4, 4));
 
         //testing isValidMove and move for the Queen
         assertTrue(m.isValidMove(new Move(7, 3, 4, 6)));
@@ -51,11 +51,11 @@ public class ChessTest {
     public void testCheck(){
         // testing the inCheck method
         ChessModel m = new ChessModel();
-        setPiece(7, 3, new Rook(Player.BLACK));
-        setPiece(7, 5, new Rook(Player.BLACK));
-        setPiece(6, 4, new Rook(Player.BLACK));
-        setPiece(6, 5, new Bishop(Player.BLACK));
-        setPiece(6, 3, new Bishop(Player.BLACK));
+        m.setPiece(7, 3, new Rook(Player.BLACK));
+        m.setPiece(7, 5, new Rook(Player.BLACK));
+        m.setPiece(6, 4, new Rook(Player.BLACK));
+        m.setPiece(6, 5, new Bishop(Player.BLACK));
+        m.setPiece(6, 3, new Bishop(Player.BLACK));
 
         assertTrue(m.inCheck(Player.WHITE));
 
