@@ -43,7 +43,7 @@ public class ChessModelTest {
         //testing isValidMove and move for the King
         assertTrue(m.isValidMove(new Move(7, 4, 7, 3)));
         m.move(new Move(7, 4, 7, 3));
-        assertTrue(m.pieceAt(7, 4).type().equals("King"));
+        assertTrue(m.pieceAt(7, 3).type().equals("King"));
 
     }
 
@@ -67,7 +67,8 @@ public class ChessModelTest {
         ChessModel m = new ChessModel();
         m.move(new Move(6, 1, 4, 1));
         m.move(new Move(7, 2, 6, 1));
-        m.undo(1);
+        m.move(new Move(6, 1, 5, 0));
+        m.undo(3);
         assertTrue(m.pieceAt(7, 2).type().equals("Bishop"));
 
 
