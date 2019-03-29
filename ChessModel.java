@@ -83,6 +83,8 @@ public class ChessModel implements IChessModel {
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 		backups.add(deepCopy(board));
+		inCheck(Player.BLACK);
+		inCheck(Player.WHITE);
 		this.setNextPlayer();
 		if (player == Player.BLACK) {
 			AI();
