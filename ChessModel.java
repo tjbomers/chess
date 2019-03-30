@@ -398,7 +398,8 @@ public class ChessModel implements IChessModel {
 		//random valid move
 		for(int fromRow = 0; fromRow < 8; fromRow ++) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
-				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
+				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK
+						&& !board[fromRow][fromCol].type().equals("King")) {
 					for (int toRow = 7; toRow > fromRow; toRow--) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
