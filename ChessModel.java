@@ -17,6 +17,7 @@ public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
 	//This will add a backup array to be used
 	private List<IChessPiece[][]> backups = new ArrayList<IChessPiece[][]>();
+	private IChessPiece[][] tempBackup = new IChessPiece[8][8];
 	//Creates a player object to be used in game situations
 	private Player player;
 
@@ -280,6 +281,11 @@ public class ChessModel implements IChessModel {
 	public void setNextPlayer() {
 
 		player = player.next();
+	}
+
+	public void setPiece(int row, int column, IChessPiece piece) {
+
+		board[row][column] = piece;
 	}
 
 	/**
