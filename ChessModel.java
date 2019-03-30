@@ -71,6 +71,18 @@ public class ChessModel implements IChessModel {
 	 * @return Returs true if the player is in checkmate, completing the game
 	 */
 	public boolean isComplete() {
+		boolean kingPresent = false;
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				if (board[row][col] != null && board[row][col].player() == player
+						&& board[row][col].type().equals("King")) {
+					kingPresent = true;
+				}
+			}
+		}
+		if(!kingPresent) {
+			return false;
+		}
 
 		if(inCheck(player)) {
 			Move testMove;
