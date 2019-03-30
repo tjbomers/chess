@@ -148,6 +148,14 @@ public class ChessModel implements IChessModel {
 	 * @param move a (@link W18project3.Move) object describing the move to be made.
 	 */
 	public void move(Move move) {
+		if(isComplete()) {
+			return;
+		}
+		this.setNextPlayer();
+		if (isComplete()) {
+			return;
+		}
+		this.setNextPlayer();
 		//Changes the board state after the move is made and creates a backup in
 		//its image
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
