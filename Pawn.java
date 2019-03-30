@@ -61,7 +61,7 @@ public class Pawn extends ChessPiece {
 			if((move.fromColumn - move.toColumn) == 0) {
 				if(move.toRow == 4) {
 					//Checks to see if there is a piece in the way
-					if(board[move.toRow][move.toColumn] == null){
+					if(board[move.toRow][move.toColumn] == null && board[move.toRow + 1][move.toColumn] == null){
 						return true;
 					}
 				}
@@ -106,7 +106,7 @@ public class Pawn extends ChessPiece {
 			if((move.fromColumn - move.toColumn) == 0) {
 				if(move.toRow == 3) {
 					//Checking to make sure there is not a piece in the way
-					if(board[move.toRow][move.toColumn] == null){
+					if(board[move.toRow][move.toColumn] == null && board[move.toRow - 1][move.toColumn] == null){
 						return true;
 					}
 				}
