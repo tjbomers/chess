@@ -14,7 +14,7 @@ import java.util.List;
  ***********************************************/
 public class ChessModel implements IChessModel {
 	//Creates an object with which we can place new piece objects
-    private IChessPiece[][] board;
+	private IChessPiece[][] board;
 	//This will add a backup array to be used
 	private List<IChessPiece[][]> backups = new ArrayList<IChessPiece[][]>();
 	private IChessPiece[][] tempBackup = new IChessPiece[8][8];
@@ -34,16 +34,16 @@ public class ChessModel implements IChessModel {
 
 		//Creates white piece objects in the proper board locations and establishes
 		//the owner of said pieces
-        board[7][0] = new Rook(Player.WHITE);
-        board[7][1] = new Knight(Player.WHITE);
-        board[7][2] = new Bishop(Player.WHITE);
-        board[7][3] = new Queen(Player.WHITE);
-        board[7][4] = new King(Player.WHITE);
-        board[7][5] = new Bishop(Player.WHITE);
-        board[7][6] = new Knight(Player.WHITE);
-        board[7][7] = new Rook(Player.WHITE);
-        for (int i = 0; i < 8; i++) {
-        	board[6][i] = new Pawn(Player.WHITE);
+		board[7][0] = new Rook(Player.WHITE);
+		board[7][1] = new Knight(Player.WHITE);
+		board[7][2] = new Bishop(Player.WHITE);
+		board[7][3] = new Queen(Player.WHITE);
+		board[7][4] = new King(Player.WHITE);
+		board[7][5] = new Bishop(Player.WHITE);
+		board[7][6] = new Knight(Player.WHITE);
+		board[7][7] = new Rook(Player.WHITE);
+		for (int i = 0; i < 8; i++) {
+			board[6][i] = new Pawn(Player.WHITE);
 		}
 
 		//Creates black piece objects in the proper board locations and establishes
@@ -60,10 +60,6 @@ public class ChessModel implements IChessModel {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
 		//Creates a backup of the board
-		backups.add(deepCopy(board));
-		backups.add(deepCopy(board));
-		backups.add(deepCopy(board));
-		backups.add(deepCopy(board));
 		backups.add(deepCopy(board));
 	}
 
@@ -88,13 +84,13 @@ public class ChessModel implements IChessModel {
 								//player is still in check
 								testMove = new Move(fromRow, fromCol, toRow, toCol);
 								if (isValidMove(testMove)) {
-									evaluateMove(testMove);
+									tempMove(testMove);
 									//If the player is no longer in check, the game is not complete
 									if(!inCheck(player)) {
-										undo(1);
+										tempUndo();
 										return false;
 									}else {
-										undo(1);
+										tempUndo();
 									}
 								}
 							}
@@ -164,7 +160,8 @@ public class ChessModel implements IChessModel {
 		//}
 	}
 
-	private void evaluateMove(Move move) {
+	private void tempMove(Move move) {
+		tempBackup = deepCopy(board);
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 	}
@@ -181,14 +178,17 @@ public class ChessModel implements IChessModel {
 		if(backups.size() > d) {
 			board = backups.get(backups.size() - 1 - d);
 			//Establishes the correct player and will remove any board states ahead
-			//of it, so any future board states from the desired backup location will
+			//of it (so any future board states from the desired backup location will
 			//be backed up appropriately.
 			for(int i = 0; i < d; i++) {
 				player.next();
 				backups.remove(backups.size() - 1);
 			}
 		}
+	}
 
+	private void tempUndo() {
+		board = tempBackup;
 	}
 
 	/**
@@ -209,33 +209,33 @@ public class ChessModel implements IChessModel {
 			fixPlayer = true;
 		}
 		//Loops through the board and checks for pieces that are not owned by the current player
-	    Move testMove;
-        for(int fromRow = 0; fromRow < 8; fromRow ++) {
-            for (int fromCol = 0; fromCol < 8; fromCol++) {
-                if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() != p) {
-                    for (int toRow = 0; toRow < 8; toRow++) {
-                        for (int toCol = 0; toCol < 8; toCol++) {
+		Move testMove;
+		for(int fromRow = 0; fromRow < 8; fromRow ++) {
+			for (int fromCol = 0; fromCol < 8; fromCol++) {
+				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() != p) {
+					for (int toRow = 0; toRow < 8; toRow++) {
+						for (int toCol = 0; toCol < 8; toCol++) {
 							//Checks the test moves to see if they are valid.  If so, then check
 							//to see if those moves target the king.  If so, notify the player that
 							//the king is in check.
-                            testMove = new Move(fromRow, fromCol, toRow, toCol);
-                            if (isValidMove(testMove)) {
-                            	if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
+							testMove = new Move(fromRow, fromCol, toRow, toCol);
+							if (isValidMove(testMove)) {
+								if (board[toRow][toCol] != null && board[toRow][toCol].type().equals("King")) {
 									//Pass the turn
 									if(fixPlayer)
 										setNextPlayer();
 									return true;
 								}
-                            }
-                        }
-                    }
-                }
-            }
-        }
+							}
+						}
+					}
+				}
+			}
+		}
 		//Pass the turn
-        if(fixPlayer)
-        	setNextPlayer();
-	    return false;
+		if(fixPlayer)
+			setNextPlayer();
+		return false;
 	}
 
 
@@ -276,7 +276,7 @@ public class ChessModel implements IChessModel {
 	 */
 	public IChessPiece pieceAt(int row, int column) {
 
-				return board[row][column];
+		return board[row][column];
 	}
 
 	/**
@@ -317,10 +317,12 @@ public class ChessModel implements IChessModel {
 								//If the given move is valid, first check to see if it removes the king from
 								//check.  If not, undo the move and check other moves.
 								if(isValidMove(testMove)) {
-									move(testMove);
+									tempMove(testMove);
 									if(inCheck(Player.BLACK)) {
-										undo(1);
+										tempUndo();
 									} else {
+										tempUndo();
+										move(testMove);
 										return;
 									}
 								}
@@ -341,34 +343,34 @@ public class ChessModel implements IChessModel {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
 							if(isValidMove(testMove) && (board[toRow][toCol] != null) && (board[toRow][toCol].player() == Player.WHITE)) {
-							    if(!(isValidMove(theMove))) {
-                                    theMove.toColumn = testMove.toColumn;
-                                    theMove.toRow = testMove.toRow;
-                                    theMove.fromColumn = testMove.fromColumn;
-                                    theMove.fromRow = testMove.fromRow;
-                                } else if(board[testMove.toRow][testMove.toColumn].type()
+								if(!(isValidMove(theMove))) {
+									theMove.toColumn = testMove.toColumn;
+									theMove.toRow = testMove.toRow;
+									theMove.fromColumn = testMove.fromColumn;
+									theMove.fromRow = testMove.fromRow;
+								} else if(board[testMove.toRow][testMove.toColumn].type()
 										!= board[theMove.toRow][theMove.toColumn].type()) {
-									//Prioritizes the Queen as the main enemy target.
-							        if (board[testMove.toRow][testMove.toColumn].type().equals("Queen")) {
-                                        move(testMove);
-                                        return;
-                                    } else if (board[theMove.toRow][theMove.toColumn].type().equals("Pawn")) {
-                                        theMove.toColumn = testMove.toColumn;
-                                        theMove.toRow = testMove.toRow;
-                                        theMove.fromColumn = testMove.fromColumn;
-                                        theMove.fromRow = testMove.fromRow;
-                                    } else if(board[theMove.toRow][theMove.toColumn].type().equals("Knight")) {
-                                        theMove.toColumn = testMove.toColumn;
-                                        theMove.toRow = testMove.toRow;
-                                        theMove.fromColumn = testMove.fromColumn;
-                                        theMove.fromRow = testMove.fromRow;
-                                    } else if(board[theMove.toRow][theMove.toColumn].type().equals("Bishop")) {
-                                        theMove.toColumn = testMove.toColumn;
-                                        theMove.toRow = testMove.toRow;
-                                        theMove.fromColumn = testMove.fromColumn;
-                                        theMove.fromRow = testMove.fromRow;
-                                    }
-                                }
+									//Prioritizes the Queen as the main enemy target
+									if (board[testMove.toRow][testMove.toColumn].type().equals("Queen")) {
+										move(testMove);
+										return;
+									} else if (board[theMove.toRow][theMove.toColumn].type().equals("Pawn")) {
+										theMove.toColumn = testMove.toColumn;
+										theMove.toRow = testMove.toRow;
+										theMove.fromColumn = testMove.fromColumn;
+										theMove.fromRow = testMove.fromRow;
+									} else if(board[theMove.toRow][theMove.toColumn].type().equals("Knight")) {
+										theMove.toColumn = testMove.toColumn;
+										theMove.toRow = testMove.toRow;
+										theMove.fromColumn = testMove.fromColumn;
+										theMove.fromRow = testMove.fromRow;
+									} else if(board[theMove.toRow][theMove.toColumn].type().equals("Bishop")) {
+										theMove.toColumn = testMove.toColumn;
+										theMove.toRow = testMove.toRow;
+										theMove.fromColumn = testMove.fromColumn;
+										theMove.fromRow = testMove.fromRow;
+									}
+								}
 
 							}
 						}
@@ -378,9 +380,9 @@ public class ChessModel implements IChessModel {
 		}
 		//Makes its final decision and moves its piece
 		if(isValidMove(theMove)) {
-		    move(theMove);
-		    return;
-        }
+			move(theMove);
+			return;
+		}
 
 		//random valid move
 		for(int fromRow = 7; fromRow >=0; fromRow --) {
