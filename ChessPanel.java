@@ -250,7 +250,7 @@ public class ChessPanel extends JPanel {
             for (int r = 0; r < model.numRows(); r++)
                 for (int c = 0; c < model.numColumns(); c++)
                     if (board[r][c] == event.getSource())
-                        if (firstTurnFlag == true) {
+                        if (firstTurnFlag == true && model.pieceAt(r, c) != null) {
                             fromRow = r;
                             fromCol = c;
                             firstTurnFlag = false;
@@ -267,7 +267,7 @@ public class ChessPanel extends JPanel {
             //This will undo the previous move and can be done multiple times in
             //the course of the game
             if (undoButton == event.getSource()) {
-                model.undo(2);
+                model.undo(1);
                 displayBoard();
             }
         }

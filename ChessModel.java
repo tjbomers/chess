@@ -282,11 +282,6 @@ public class ChessModel implements IChessModel {
 		player = player.next();
 	}
 
-	public void setPiece(int row, int column, IChessPiece piece) {
-
-		board[row][column] = piece;
-	}
-
 	/**
 	 * This is the AI method for the computer, which controls the black pieces.  The AI
 	 * will prioritize pieces it can take based on their overall power level as well as
