@@ -163,9 +163,13 @@ public class ChessModel implements IChessModel {
 			JOptionPane.showMessageDialog(null,
 					"WHITE  King is currently in check!");
 		}
-		isComplete();
+		if(isComplete()) {
+			return;
+		}
 		this.setNextPlayer();
-		isComplete();
+		if (isComplete()) {
+			return;
+		}
 		if (player == Player.BLACK) {
 			AI();
 		}
