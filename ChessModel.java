@@ -138,7 +138,6 @@ public class ChessModel implements IChessModel {
 	public void move(Move move) {
 		//Changes the board state after the move is made and creates a backup in
 		//its image
-		System.out.println("testing");
 		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 		backups.add(deepCopy(board));
@@ -155,9 +154,9 @@ public class ChessModel implements IChessModel {
 		isComplete();
 		this.setNextPlayer();
 		isComplete();
-		//if (player == Player.BLACK) {
-		//	AI();
-		//}
+		if (player == Player.BLACK) {
+			AI();
+		}
 	}
 
 	private void tempMove(Move move) {
@@ -385,10 +384,10 @@ public class ChessModel implements IChessModel {
 		}
 
 		//random valid move
-		for(int fromRow = 7; fromRow >=0; fromRow --) {
+		for(int fromRow = 0; fromRow < 8; fromRow ++) {
 			for (int fromCol = 0; fromCol < 8; fromCol++) {
 				if (board[fromRow][fromCol] != null && board[fromRow][fromCol].player() == Player.BLACK) {
-					for (int toRow = fromRow - 1; toRow >= 0; toRow--) {
+					for (int toRow = 7; toRow > fromRow; toRow--) {
 						for (int toCol = 0; toCol < 8; toCol++) {
 							testMove = new Move(fromRow, fromCol, toRow, toCol);
 							if(isValidMove(testMove)) {
