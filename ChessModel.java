@@ -348,7 +348,7 @@ public class ChessModel implements IChessModel {
                                     theMove.fromRow = testMove.fromRow;
                                 } else if(board[testMove.toRow][testMove.toColumn].type()
 										!= board[theMove.toRow][theMove.toColumn].type()) {
-									//Prioritizes the Queen as the main enemy target
+									//Prioritizes the Queen as the main enemy target.
 							        if (board[testMove.toRow][testMove.toColumn].type().equals("Queen")) {
                                         move(testMove);
                                         return;
