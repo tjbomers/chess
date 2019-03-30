@@ -60,6 +60,10 @@ public class ChessModel implements IChessModel {
 		}
 		//Creates a backup of the board
 		backups.add(deepCopy(board));
+		backups.add(deepCopy(board));
+		backups.add(deepCopy(board));
+		backups.add(deepCopy(board));
+		backups.add(deepCopy(board));
 	}
 
 
@@ -176,7 +180,7 @@ public class ChessModel implements IChessModel {
 		if(backups.size() > d) {
 			board = backups.get(backups.size() - 1 - d);
 			//Establishes the correct player and will remove any board states ahead
-			//of it (so any future board states from the desired backup location will
+			//of it, so any future board states from the desired backup location will
 			//be backed up appropriately.
 			for(int i = 0; i < d; i++) {
 				player.next();
