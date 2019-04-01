@@ -9,22 +9,26 @@ public class ChessModelTest {
 
     @Test
     public void testMoves(){
+        // turn off AI to use this test
         ChessModel m = new ChessModel();
 
         // testing isValidMove and move for the pawn
         assertTrue(m.isValidMove(new Move(6, 1, 4, 1)));
         m.move(new Move(6, 1, 4, 1));
         assertTrue(m.pieceAt(4, 1).type().equals("Pawn"));
+        m.move(new Move(1, 1, 2, 1));
 
         // testing isValidMove and move for the bishop
         assertTrue(m.isValidMove(new Move(7, 2, 6, 1)));
         m.move(new Move(7, 2, 6, 1));
         assertTrue(m.pieceAt(6, 1).type().equals("Bishop"));
+        m.move(new Move(1, 2, 2, 2));
 
         // testing isValidMove and move for the knight
         assertTrue(m.isValidMove(new Move(7, 1, 5, 2)));
         m.move(new Move(7, 1, 5, 2));
         assertTrue(m.pieceAt(5, 2).type().equals("Knight"));
+        m.move(new Move(1, 3, 2, 3));
 
         m.move(new Move(6, 0, 4, 0));
 
@@ -32,18 +36,22 @@ public class ChessModelTest {
         assertTrue(m.isValidMove(new Move(7, 0, 5, 0)));
         m.move(new Move(7, 0, 5, 0));
         assertTrue(m.pieceAt(5, 0).type().equals("Rook"));
+        m.move(new Move(1, 4, 2, 4));
 
         m.move(new Move(6, 4, 4, 4));
 
         //testing isValidMove and move for the Queen
-       // assertTrue(m.isValidMove(new Move(7, 3, 4, 6)));
-        //m.move(new Move(7, 3, 4, 6));
-        //assertTrue(m.pieceAt(4, 6).type().equals("Queen"));
-
+        assertTrue(m.isValidMove(new Move(7, 3, 4, 6)));
+        m.move(new Move(7, 3, 4, 6));
+        assertTrue(m.pieceAt(4, 6).type().equals("Queen"));
+        m.move(new Move(1, 5, 2, 5));
+        
         //testing isValidMove and move for the King
-        //assertTrue(m.isValidMove(new Move(7, 4, 7, 3)));
-       // m.move(new Move(7, 4, 7, 3));
-        //assertTrue(m.pieceAt(7, 3).type().equals("King"));
+        assertTrue(m.isValidMove(new Move(7, 4, 7, 3)));
+        m.move(new Move(7, 4, 7, 3));
+        assertTrue(m.pieceAt(7, 3).type().equals("King"));
+
+        m.move(new Move(1, 5, 2, 5));
 
     }
 
